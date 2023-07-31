@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0%;
+  box-sizing: border-box;
+}
+.mySwiper .swiper-pagination-bullet{
+  background-color: #C9196B;
+}
+
+.slider-controler{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-right: 15%;
+}
+
+.slider-controler .swiper-button-prev{
+    position: relative;
+    padding: 25px;
+    background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider-controler .swiper-button-next{
+  position: relative;
+  padding: 25px;
+  background-color: white;
+    border-radius: 100%;
+    cursor: pointer;
+    margin-left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
