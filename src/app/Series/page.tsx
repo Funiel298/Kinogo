@@ -2,48 +2,44 @@
 import Slider from '../components/Slider'
 import Link from 'next/link'
 import Card from '../components/Card'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper,SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 export { Slider, Card }
 export * from '../components/Slider'
 
 
 const genres = [
-  { name: 'Action', id: '28' },
-  { name: 'Adventure', id: '12' },
-  { name: 'Animation', id: '16' },
-  { name: 'Comedy', id: '35' },
-  { name: 'Crime', id: '80' },
-  { name: 'Documentary', id: '99' },
-  { name: 'Drama', id: '18' },
-  { name: 'Family', id: '10751' },
-  { name: 'Fantasy', id: '14' },
-  { name: 'History', id: '36' },
-  { name: 'Horror', id: '27' },
-  { name: 'Music', id: '10402' },
-  { name: 'Mystery', id: '9648' },
-  { name: 'Romance', id: '10749' },
-  { name: 'Science Fiction', id: '878' },
-  { name: 'TV Movie', id: '10770' },
-  { name: 'Thriller', id: '53' },
-  { name: 'War', id: '10752' },
-  { name: 'Western', id: '37' }
-];
-
-
+    { name: 'Action & Adventure', id: '10759' },
+    { name: 'Animation', id: '16' },
+    { name: 'Comedy', id: '35' },
+    { name: 'Crime', id: '80' },
+    { name: 'Documentary', id: '99' },
+    { name: 'Drama', id: '18' },
+    { name: 'Family', id: '10751' },
+    { name: 'Kids', id: '10762' },
+    { name: 'Mystery', id: '9648' },
+    { name: 'News', id: '10763' },
+    { name: 'Reality', id: '10764' },
+    { name: 'Sci-Fi & Fantasy', id: '10765' },
+    { name: 'Soap', id: '10766' },
+    { name: 'Talk', id: '10767' },
+    { name: 'War & Politics', id: '10768' },
+    { name: 'Western', id: '37' }
+  ];
+  
 const ranking =[6,7,8,9]
-
 
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Rationale } from 'next/font/google'
+
+
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 export default function Movie() {
-  const [movies, setMovies] : any[] = useState([]);
-    const [selectedGenre, setSelectedGenre] = useState(12);
+    const [movies, setMovies] : any[] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState(10759);
     const [selectedRating, setSelectedRating] = useState(9);
     const [currentPage, setCurrentPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
@@ -55,11 +51,11 @@ export default function Movie() {
       }
   
       setIsLoading(true);
-      const newMovies = await fetchMoviesByGenre(selectedGenre, 'movie', selectedRating, currentPage);
+      const newMovies = await fetchMoviesByGenre(selectedGenre, 'tv', selectedRating, currentPage);
       if (newMovies.length === 0) {
         setHasMorePages(false);
       } else {
-        setMovies((prevMovies: any[]) => [...prevMovies, ...newMovies]);
+        setMovies((prevMovies : any[]) => [...prevMovies, ...newMovies]);
         setCurrentPage(prevPage => prevPage + 1);
       }
       setIsLoading(false);
@@ -96,7 +92,7 @@ export default function Movie() {
     const handleRatingChange = (rating: number) => {
       setSelectedRating(rating);
     };
-  
+
   return (
     <div className='bg-gray-800 pt-10 flex flex-col justify-center items-center'>
       <div className='flex flex-col w-full pl-32 pr-32'>
@@ -124,13 +120,13 @@ export default function Movie() {
                     <button key={rating} onClick={() => {setSelectedRating(rating)}} className='p-5 font-bold bg-gray-900 text-xl  rounded-xl mr-5 text-white'>{rating}</button>
                 ))}
             </div>
-            <h1 className='text-white font-bold text-2xl'>You turned movies with {selectedRating} Ranking</h1>
+            <h1 className='text-white font-bold text-2xl'>You turned series with {selectedRating} Ranking</h1>
         </div>
       </div>
       
       <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
         {movies.map((film: any) => (
-          <Link key={film.id} href={`/filmPage/${film.id}`} className="m-10">
+          <Link key={film.id} href={`/Series/${film.id}`} className="m-5">
             <Card
               image={film.poster_path || film.profile_path}
               name={film.title || film.name}

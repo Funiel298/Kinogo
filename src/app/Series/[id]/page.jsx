@@ -5,7 +5,7 @@
 
 import GetData from '../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
-import { Slider } from "../page" 
+import { Slider } from '../page'
 import {AiFillStar} from 'react-icons/ai'
 import { use } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -33,14 +33,14 @@ export default function Page({params : { id }}){
 
     
     
-    const similar = use(GetData(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const post = use(GetData(`https://api.themoviedb.org/3/movie/${id}?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const trailers = use(GetData(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const casting = use(GetData(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
+    const similar = use(GetData(`https://api.themoviedb.org/3/tv/${id}/similar?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
+    const post = use(GetData(`https://api.themoviedb.org/3/tv/${id}?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
+    const trailers = use(GetData(`https://api.themoviedb.org/3/tv/${id}/videos?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
+    const casting = use(GetData(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
     console.log(trailers)
     const API_IMG = "https://image.tmdb.org/t/p/w500/"
 
-    console.log(post.release_date?.slice(5,6))
+    console.log(post.first_air_date?.slice(5,6))
     return(
         <div className="bg-gray-900">
             <div className="flex flex-row">
@@ -54,15 +54,14 @@ export default function Page({params : { id }}){
                     <div className="w-1/4 ml-20">   
                         <h1 className="text-3xl font-bold ">{post.title}</h1>
                         <div className="flex flex-row justify-between ">
-                            <h6 className="text-sm mt-3">Movie ({ post.release_date.slice(8,10) + ' ' +  months[Number(post.release_date.slice(5,7))-1] + "   " +   post.release_date.slice(0,4)}) </h6>
+                            <h6 className="text-sm mt-3">Series   (from { post.first_air_date?.slice(8,10) + ' ' +  months[Number(post.first_air_date?.slice(5,7))-1] + "   " +   post.first_air_date?.slice(0,4)} to { post.last_air_date?.slice(8,10) + ' ' +  months[Number(post.last_air_date?.slice(5,7))-1] + "   " +   post.last_air_date?.slice(0,4)})</h6>
                             <div className="flex flex-row items-center justify-center">
                                 <h6 className="text-sm mt-3">Rating:  </h6> 
                                 <AiFillStar className='mt-3 ml-3'/>
                                 <h6 className="text-sm mt-3">{post.vote_average} </h6>
                             </div>
                         </div>
-                        <a href="#mySwiper"><button className="bg-red-400 p-2 rounded-xl mt-3 mb-3" >Watch Trailer</button></a>
-                        <h4 className="text-sm text-gray-300">{post.overview}</h4>
+                        <a href="#mySwiper"><button className="bg-red-400 p-2 rounded-xl mt-3 mb-3" >Watch Trailer</button></a>                        <h4 className="text-sm text-gray-300">{post.overview}</h4>
                         <div className=" mt-4">
                             <h1 className="text-2xl font-bold">Details</h1>
 
@@ -88,8 +87,8 @@ export default function Page({params : { id }}){
 
                         </div>
                         <div className="border-b-2 mb-2 flex flex-row justify-between items-center">
-                            <h2 className="text-xl font-medium">Runtime</h2>
-                            <p className="text-sm text-gray-600 ">{post.runtime} min</p>
+                            <h2 className="text-xl font-medium">Episodes</h2>
+                            <p className="text-sm text-gray-600 ">{post.number_of_episodes}</p>
                         </div>
                     </div>
                 </div>
@@ -149,8 +148,8 @@ export default function Page({params : { id }}){
                          
 
                 <div className="w-11/12 mb-5 flex justify-center items-center flex-col">
-                    <Slider movies={casting.cast} tag={'Actors'} type={`Person`}></Slider>
-                    <Slider movies={similar.results} tag={'Similar'} type={'movie'}></Slider>
+                    <Slider movies={casting.cast} tag={'Actors'} type={'Person'}></Slider>
+                    <Slider movies={similar.results} tag={'Similar'} type={'Series'}></Slider>
                     
                 </div>
                 

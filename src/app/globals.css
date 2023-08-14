@@ -7,7 +7,12 @@
   padding: 0%;
   box-sizing: border-box;
 }
-.mySwiper .swiper-pagination-bullet{
+
+html{
+  scroll-behavior: smooth;
+}
+
+#mySwiper .swiper-pagination-bullet{
   background-color: #C9196B;
 }
 
@@ -15,7 +20,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-right: 15%;
 }
 
 .slider-controler .swiper-button-prev{

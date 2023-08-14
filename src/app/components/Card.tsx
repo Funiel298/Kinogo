@@ -8,7 +8,7 @@ export default function Card(props: any){
     const API_IMG = "https://image.tmdb.org/t/p/w500/"
 
     return(
-        <div className="  h-72 mb-10  flex flex-col">
+        <div className=" w-2xl h-72 mb-10  flex flex-col">
             
             <img src={API_IMG + props.image} alt="film_image"
                 className='
@@ -37,10 +37,13 @@ export default function Card(props: any){
                         {props.name?.slice(0,20)+'...'}
                         </h3> }
 
-
-                <div className='flex flex-row  '>
-                    <AiFillStar className='mt-1'/>{<p>{props.rating}</p>}
-                </div>
+                {props.rating? 
+                    <div className='flex flex-row  '>
+                        <AiFillStar className='mt-1'/>{<p>{props.rating}</p>}
+                    </div>:
+                    null
+                }
+                
             </div>
             
             
