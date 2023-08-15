@@ -4,7 +4,6 @@ import Link from 'next/link'
 import Card from '../components/Card'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
-export { Slider, Card }
 export * from '../components/Slider'
 
 

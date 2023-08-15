@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/filmPage/page.tsx", "src/app/filmPage/[id]", "src/app/Person/page.tsx", "src/app/components/GenresData.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/filmPage/page.tsx", "src/app/filmPage/[id]", "src/app/Person/page.tsx", "src/app/components/GenresData.jsx", "src/app/404/404.js"],
   "exclude": ["node_modules"]
 }
