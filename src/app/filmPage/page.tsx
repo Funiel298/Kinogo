@@ -4,11 +4,13 @@ import Link from 'next/link'
 import Card from '../components/Card'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
+
+
+
 export * from '../components/Slider'
 
-
 const genres = [
-  { name: 'Action', id: '28' },
+  { name: 'Action', id: '28'},
   { name: 'Adventure', id: '12' },
   { name: 'Animation', id: '16' },
   { name: 'Comedy', id: '35' },
@@ -36,7 +38,6 @@ const ranking =[6,7,8,9]
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Rationale } from 'next/font/google'
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -97,18 +98,24 @@ export default function Movie() {
     };
   
   return (
-    <div className='bg-gray-800 pt-10 flex flex-col justify-center items-center'>
+    <div className='bg-gray-900 pt-5 flex flex-col justify-center items-center'>
       <div className='flex flex-col w-full pl-32 pr-32'>
         <div className='flex flex-row  '>
             <Swiper 
-            slidesPerView={4}
-            spaceBetween={30}
+            slidesPerView={7}
+            spaceBetween={5}
             navigation={true}
             >
             
 
             {genres.map((genre : any)=>(
-                <SwiperSlide key={genre.id}><button  onClick={() => setSelectedGenre(genre.id)} className='p-3 font-bold bg-gray-900 text-2xl h-40  w-52 rounded-xl text-white'>{genre.name}</button></SwiperSlide>
+                <SwiperSlide key={genre.id}>
+                    <button  onClick={() => setSelectedGenre(genre.id)} 
+
+                      className='py-8 font-semibold bg-gray-900 text-xl w-40 rounded-xl text-white flex justify-center items-center flex-col'>
+                        {genre.name}
+                    </button>
+                  </SwiperSlide>
             ))}
             
             </Swiper>
@@ -129,7 +136,7 @@ export default function Movie() {
       
       <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
         {movies.map((film: any) => (
-          <Link key={film.id} href={`/filmPage/${film.id}`} className="m-10">
+          <Link key={film.id} href={`/filmPage/${film.id}`} className="mt-5 ml-5 mr-5">
             <Card
               image={film.poster_path || film.profile_path}
               name={film.title || film.name}

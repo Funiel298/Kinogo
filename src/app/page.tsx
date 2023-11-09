@@ -81,15 +81,12 @@ export default function Home() {
 
   return (
     <div className="bg-gray-900 flex justify-center" >
-      <div className="flex justify-center w-full flex-wrap items-center mb-10">
+      <div className="flex justify-center w-full flex-wrap items-center mt-10 px-5">
 
-      {
-        //<div id="rarrow" className="font-bold text-red-400"></div>
-      }
+      
       <Swiper
         navigation={true}
-        
-        slidesPerView={1}
+        slidesPerView={2}
         spaceBetween={30}
         loop={true}
         
@@ -98,10 +95,21 @@ export default function Home() {
         
           modules={[Pagination, Navigation]}
           id="mySwiper"
-          className="w-11/12"
+          className="w-screen"
         >
           {nowPlaying.map((film)=>
-            <SwiperSlide> <BigCard key={film} link={`filmPage/${film.id}`} image={API_IMG+film.backdrop_path} name={film.original_title} rating={film.vote_average} desc={film.overview} duration={film.popularity} ></BigCard> </SwiperSlide>
+            <SwiperSlide> 
+              <BigCard 
+                key={film} 
+                link={`filmPage/${film.id}`} 
+                image={API_IMG+film.backdrop_path} 
+                name={film.original_title} 
+                rating={film.vote_average} 
+                desc={film.overview} 
+                year={film.release_date} >
+              </BigCard> 
+            
+            </SwiperSlide>
           )}
           
             

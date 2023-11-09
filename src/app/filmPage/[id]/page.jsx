@@ -5,16 +5,11 @@
 
 import GetData from '../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
-import { Slider } from "../page" 
 import {AiFillStar} from 'react-icons/ai'
 import { use } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+import Slider from '../../components/Slider'
 
 
  
@@ -58,7 +53,7 @@ export default function Page({params : { id }}){
                             <div className="flex flex-row items-center justify-center">
                                 <h6 className="text-sm mt-3">Rating:  </h6> 
                                 <AiFillStar className='mt-3 ml-3'/>
-                                <h6 className="text-sm mt-3">{post.vote_average} </h6>
+                                <h6 className="text-sm mt-3">{post.vote_average.toFixed(1)} </h6>
                             </div>
                         </div>
                         <a href="#mySwiper"><button className="bg-red-400 p-2 rounded-xl mt-3 mb-3" >Watch Trailer</button></a>
@@ -99,6 +94,7 @@ export default function Page({params : { id }}){
                     navigation={true}
                     slidesPerView={2}
                     centeredSlides={true}
+                    spaceBetween={50}
                     modules={[Pagination, Navigation]}
                     id="mySwiper"
                     className="w-10/12 mt-10 p-10"
@@ -111,8 +107,8 @@ export default function Page({params : { id }}){
                                         object-cover
                                         rounded-3xl
                                         cursor-pointer  '
-                                    width="560" 
-                                    height="315" 
+                                    width="650" 
+                                    height="400" 
                                     src={`https://www.youtube.com/embed/${film.key} `}
                                     title="YouTube video player" 
                                     frameborder="0" 

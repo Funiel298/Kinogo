@@ -46,7 +46,11 @@ export default function Page({params : { id }}){
                     <div className="w-96 ml-20">   
                         <h1 className="text-3xl font-bold ">{post.name}</h1>
                         <div className="flex flex-col justify-between w-full ">
-                            <h6 className="text-sm mt-3">Birthday:   { post.birthday?.slice(8,10) + ' ' +  months[Number(post.birthday?.slice(5,7))-1] + "   " +   post.birthday?.slice(0,4)}</h6>
+                            <h6 className="text-sm mt-3">Birthday:   { 
+                                (post.birthday) ? 
+                                post.birthday?.slice(8,10) + ' ' +  months[Number(post.birthday?.slice(5,7))-1] + "   " +   post.birthday?.slice(0,4)
+                                : <span className="text-sm mt-3">The same day as Jesus, actually I don't know</span>
+                            }</h6>
                             <div className="flex flex-row items-center justify-center">
                                 {post.deathday? 
                                     <h6 className="text-sm mt-3">Deathday:  {post.deathday}</h6>: null }
@@ -63,7 +67,8 @@ export default function Page({params : { id }}){
                         <div className="border-b-2 mt-4 mb-2 flex flex-row justify-between items-center">
                             <h2 className="text-xl font-medium">Place of birth</h2>
                             <div className="flex flex-row flex-wrap justify-end w-3/5">
-                                <p key={post} className="text-sm text-gray-600 ml-1">{post.place_of_birth}</p>
+                                <p key={post} className="text-sm text-gray-600 ml-1">{post.place_of_birth? post.place_of_birth : 
+                                    <p key={post} className="text-sm text-gray-600 ml-1">Maybe somewhere in US?</p>}</p>
                             </div>
                         </div>
 

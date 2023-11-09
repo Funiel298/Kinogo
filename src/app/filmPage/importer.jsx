@@ -1,0 +1,7 @@
+'use client'
+import Slider from '../components/Slider'
+import Link from 'next/link'
+import Card from '../components/Card'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation } from 'swiper/modules'
+export * from '../components/Slider'

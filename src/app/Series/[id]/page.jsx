@@ -5,16 +5,13 @@
 
 import GetData from '../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
-import { Slider } from '../page'
 import {AiFillStar} from 'react-icons/ai'
 import { use } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
+import Slider from '../../components/Slider'
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+
 
 
  
@@ -54,7 +51,7 @@ export default function Page({params : { id }}){
                     <div className="w-1/4 ml-20">   
                         <h1 className="text-3xl font-bold ">{post.title}</h1>
                         <div className="flex flex-row justify-between ">
-                            <h6 className="text-sm mt-3">Series   (from { post.first_air_date?.slice(8,10) + ' ' +  months[Number(post.first_air_date?.slice(5,7))-1] + "   " +   post.first_air_date?.slice(0,4)} to { post.last_air_date?.slice(8,10) + ' ' +  months[Number(post.last_air_date?.slice(5,7))-1] + "   " +   post.last_air_date?.slice(0,4)})</h6>
+                            <h6 className="text-sm mt-3 mr-2">Series   (from { post.first_air_date?.slice(8,10) + ' ' +  months[Number(post.first_air_date?.slice(5,7))-1] + "   " +   post.first_air_date?.slice(0,4)} to { post.last_air_date?.slice(8,10) + ' ' +  months[Number(post.last_air_date?.slice(5,7))-1] + "   " +   post.last_air_date?.slice(0,4)})</h6>
                             <div className="flex flex-row items-center justify-center">
                                 <h6 className="text-sm mt-3">Rating:  </h6> 
                                 <AiFillStar className='mt-3 ml-3'/>

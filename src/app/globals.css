@@ -16,31 +16,24 @@ html{
   background-color: #C9196B;
 }
 
-.slider-controler{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+.swiper-button-next{
+  padding: 30px;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
 
-.slider-controler .swiper-button-prev{
-    position: relative;
-    padding: 25px;
-    background-color: white;
-    border-radius: 100%;
-    cursor: pointer;
-    margin-right: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.swiper-button-prev{
+  padding: 30px;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
-.slider-controler .swiper-button-next{
-  position: relative;
-  padding: 25px;
-  background-color: white;
-    border-radius: 100%;
-    cursor: pointer;
-    margin-left: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.Slider{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
