@@ -93,11 +93,13 @@ export default function Page({params : { id }}){
                 <Swiper
                     navigation={true}
                     slidesPerView={2}
+                    slidesPerClick={1}
+                    loop={true}
                     centeredSlides={true}
                     spaceBetween={50}
                     modules={[Pagination, Navigation]}
                     id="mySwiper"
-                    className="w-10/12 mt-10 p-10"
+                    className="w-11/12 mt-10 p-10"
                     >
                     {trailers.results.map((film)=>
                         <SwiperSlide>

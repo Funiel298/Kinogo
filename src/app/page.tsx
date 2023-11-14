@@ -7,6 +7,9 @@ import { Navigation } from "swiper/modules";
 import Link from "next/link";
 import Slider from "./components/Slider"
 
+import SwiperCore from 'swiper';
+SwiperCore.use([Navigation]);
+
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -81,13 +84,13 @@ export default function Home() {
 
   return (
     <div className="bg-gray-900 flex justify-center" >
-      <div className="flex justify-center w-full flex-wrap items-center mt-10 px-5">
+      <div className="flex justify-center w-full flex-wrap items-center mt-10">
 
       
       <Swiper
         navigation={true}
         slidesPerView={2}
-        spaceBetween={30}
+        spaceBetween={150}
         loop={true}
         
         pagination={{ clickable: true, dynamicBullets: true }}
@@ -95,7 +98,7 @@ export default function Home() {
         
           modules={[Pagination, Navigation]}
           id="mySwiper"
-          className="w-screen"
+          className="w-screen mb-3"
         >
           {nowPlaying.map((film)=>
             <SwiperSlide> 

@@ -18,9 +18,9 @@ export default function Slider({movies, tag, type}){
     return(
             movies.length > 0 ? 
             
-                <div className=" flex flex-col w-full justify-center  mt-3">
+                <div className=" flex flex-col w-full justify-center  mt-1">
 
-                    <span className="text-xl text-white -mb-2 font-bold">{tag}</span>
+                    <span className="text-xl text-white -mb-4 font-bold">{tag}</span>
                     
 
                     <div className="w-full flex flex-row justify-center items-center">

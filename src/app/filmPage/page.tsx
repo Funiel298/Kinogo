@@ -5,6 +5,9 @@ import Card from '../components/Card'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 
+import SwiperCore from 'swiper';
+SwiperCore.use([Navigation]);
+
 
 
 export * from '../components/Slider'
@@ -111,8 +114,7 @@ export default function Movie() {
             {genres.map((genre : any)=>(
                 <SwiperSlide key={genre.id}>
                     <button  onClick={() => setSelectedGenre(genre.id)} 
-
-                      className='py-8 font-semibold bg-gray-900 text-xl w-40 rounded-xl text-white flex justify-center items-center flex-col'>
+                      className='py-8 font-semibold bg-gray-800 text-xl w-40 rounded-xl text-white flex justify-center items-center flex-col'>
                         {genre.name}
                     </button>
                   </SwiperSlide>
