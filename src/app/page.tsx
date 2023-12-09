@@ -76,7 +76,11 @@ export default function Home() {
   },[])
 
 
-
+  const breakpoints = {
+    1024: {
+      slidesPerView: 1,
+    },
+  }
   
 
 
@@ -90,9 +94,9 @@ export default function Home() {
       <Swiper
         navigation={true}
         slidesPerView={2}
-        spaceBetween={150}
+        spaceBetween={120}
         loop={true}
-        
+        breakpoints = {breakpoints}
         pagination={{ clickable: true, dynamicBullets: true }}
         centeredSlides={true}
         

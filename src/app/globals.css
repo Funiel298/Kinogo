@@ -8,6 +8,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --swiper-navigation-size: 44px;
+}
+
 html{
   scroll-behavior: smooth;
 }
@@ -36,4 +40,28 @@ html{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media (min-width: 640px) {
+  
+  .swiper-button-next{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+  
+  .swiper-button-prev{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+  }
+
+  :root {
+    --swiper-navigation-size: 14px;
+  }
+
 }

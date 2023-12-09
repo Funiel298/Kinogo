@@ -29,16 +29,16 @@ export default function Card(props: any){
                 
                 
                 {props.name?.length<15 ? 
-                    <h3 className='font-bold text-white text-sm'>
+                    <h3 className='font-bold text-white text-sm md:text-xs'>
                         {props.name}
                         </h3>
                         :
-                    <h3 className='font-bold text-white text-sm'>
+                    <h3 className='font-bold text-white text-sm md:text-xs'>
                         {props.name?.slice(0,15)+'...'}
                         </h3> }
 
                 {props.rating? 
-                    <div className='flex flex-row  '>
+                    <div className='flex flex-row text-sm  md:text-xs'>
                         <AiFillStar className='mt-1'/>{<p>{props.rating.toFixed(1)}</p>}
                     </div>:
                     null

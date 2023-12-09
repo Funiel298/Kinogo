@@ -15,6 +15,30 @@ import 'swiper/css/navigation';
 
 export default function Slider({movies, tag, type}){
 
+
+    const breakpoints = {
+        360: {
+            slidesPerView: 2,
+            spaceBetween: 5,
+          },
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+        },
+        760: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+        850: {
+        slidesPerView: 6,
+        spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 7,
+          spaceBetween: 30,
+        },
+      }
+
     return(
             movies.length > 0 ? 
             
@@ -31,8 +55,9 @@ export default function Slider({movies, tag, type}){
                             spaceBetween={30}
                             navigation={true}
                             modules={[Pagination, Navigation]}
+                            breakpoints = {breakpoints}
                             id="mySwiper"
-                            className="w-full"
+                            className="w-full flex justify-center items-center"
                         >   
                                 
                                 {movies?.map((film)=>

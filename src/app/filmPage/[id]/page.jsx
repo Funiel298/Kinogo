@@ -15,7 +15,20 @@ import Slider from '../../components/Slider'
  
 
 
-   
+   const breakpoints = {
+    640: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    760: {
+      slidesPerView: 1.25,
+      spaceBetween: 40,
+    },
+    1024: {
+      slidesPerView: 1.5,
+      spaceBetween: 50,
+    },
+  }
 
 
     const months = ['January','February','March','April','May','June','Jule','August','September','October','November','December']
@@ -37,7 +50,7 @@ export default function Page({params : { id }}){
 
     console.log(post.release_date?.slice(5,6))
     return(
-        <div className="bg-gray-900">
+        <div className="bg-gray-900 w-full">
             <div className="flex flex-row">
                 <img className="w-full  h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
                 <div className="text-white r-0 absolute  flex justify-end h-96   w-full bg-gradient-to-b from-transparent  from-10% to-gray-900 to-100%"/>
@@ -94,10 +107,10 @@ export default function Page({params : { id }}){
                     navigation={true}
                     slidesPerView={2}
                     slidesPerClick={1}
-                    loop={true}
                     centeredSlides={true}
                     spaceBetween={50}
                     modules={[Pagination, Navigation]}
+                    breakpoints = {breakpoints}
                     id="mySwiper"
                     className="w-11/12 mt-10 p-10"
                     >
@@ -148,7 +161,7 @@ export default function Page({params : { id }}){
 
                 <div className="w-11/12 mb-5 flex justify-center items-center flex-col">
                     <Slider movies={casting.cast} tag={'Actors'} type={`Person`}></Slider>
-                    <Slider movies={similar.results} tag={'Similar'} type={'movie'}></Slider>
+                    <Slider movies={similar.results} tag={'Similar'} type={'filmPage'}></Slider>
                     
                 </div>
                 
