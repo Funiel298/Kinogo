@@ -3,7 +3,7 @@
 
 
 
-import GetData from '../../components/ServerGetData'
+import GetData from '../../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import { Slider } from "../page" 
 import {AiFillStar} from 'react-icons/ai'
@@ -15,7 +15,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import getData from '../../components/ServerGetData'
+import getData from '../../../components/ServerGetData'
 
 
  

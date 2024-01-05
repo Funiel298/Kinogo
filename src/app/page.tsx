@@ -1,11 +1,9 @@
 "use client"
-import React, { useEffect, useState, useRef } from "react"
-import Card from "./components/Card"
+import React, { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import BigCard from './components/BigCard'
+import BigCard from '../components/BigCard'
 import { Navigation } from "swiper/modules";
-import Link from "next/link";
-import Slider from "./components/Slider"
+import Slider from "../components/Slider"
 
 import SwiperCore from 'swiper';
 SwiperCore.use([Navigation]);
@@ -17,7 +15,6 @@ import 'swiper/css/navigation';
 
 
 // import required modules
-import { Pagination } from 'swiper/modules';
 
 
 async function getData() {
@@ -93,21 +90,18 @@ export default function Home() {
       
       <Swiper
         navigation={true}
-        slidesPerView={2}
-        spaceBetween={120}
+        slidesPerView={3}
         loop={true}
         breakpoints = {breakpoints}
-        pagination={{ clickable: true, dynamicBullets: true }}
         centeredSlides={true}
         
-          modules={[Pagination, Navigation]}
-          id="mySwiper"
-          className="w-screen mb-3"
+          modules={[ Navigation]}
+          className="w-full mt-5"
         >
           {nowPlaying.map((film)=>
             <SwiperSlide> 
               <BigCard 
-                key={film} 
+                key={film.overview} 
                 link={`filmPage/${film.id}`} 
                 image={API_IMG+film.backdrop_path} 
                 name={film.original_title} 

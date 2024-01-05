@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { throttle } from 'lodash';
-import Card from '../components/Card';
-import fetchData from '../components/GetActors'; // Import your data fetching function here
+import Card from '../../components/Card';
+import fetchData from '../../components/GetActors'; // Import your data fetching function here
 import Link from 'next/link';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 

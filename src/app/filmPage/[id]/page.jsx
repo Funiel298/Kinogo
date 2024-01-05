@@ -3,13 +3,13 @@
 
 
 
-import GetData from '../../components/ServerGetData'
+import GetData from '../../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import {AiFillStar} from 'react-icons/ai'
 import { use } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
-import Slider from '../../components/Slider'
+import Slider from '../../../components/Slider'
 
 
  
@@ -52,7 +52,7 @@ export default function Page({params : { id }}){
     return(
         <div className="bg-gray-900 w-full">
             <div className="flex flex-row">
-                <img className="w-full  h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
+                <img className="w-full fixed  h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
                 <div className="text-white r-0 absolute  flex justify-end h-96   w-full bg-gradient-to-b from-transparent  from-10% to-gray-900 to-100%"/>
                  
             </div>

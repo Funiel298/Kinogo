@@ -52,7 +52,7 @@ export default function Slider({movies, tag, type}){
 
                         <Swiper
                             slidesPerView={8}
-                            spaceBetween={30}
+                            spaceBetween={10}
                             navigation={true}
                             modules={[Pagination, Navigation]}
                             breakpoints = {breakpoints}

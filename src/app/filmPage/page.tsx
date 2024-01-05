@@ -1,7 +1,7 @@
 'use client'
-import Slider from '../components/Slider'
+import Slider from '../../components/Slider'
 import Link from 'next/link'
-import Card from '../components/Card'
+import Card from '../../components/Card'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 
@@ -10,7 +10,7 @@ SwiperCore.use([Navigation]);
 
 
 
-export * from '../components/Slider'
+export * from '../../components/Slider'
 
 const genres = [
   { name: 'Action', id: '28'},
@@ -39,7 +39,7 @@ const ranking =[6,7,8,9]
 
 
 import React, { useState, useEffect } from 'react';
-import fetchMoviesByGenre from '../components/GenresData'; 
+import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
