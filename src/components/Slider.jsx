@@ -1,95 +1,56 @@
-'use client'
-import React, { useEffect, useState, useRef } from "react"
-import Card from './Card'
-import SpecialCard from './SpecialCard'
+// Import necessary packages and styles
+import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from "swiper/modules";
-import Link from "next/link";
-
+import Link from 'next/link';
+import Card from './Card';
+import SpecialCard from './SpecialCard';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
+// Import Swiper modules
+import { Navigation, Pagination } from 'swiper';
 
-export default function Slider({movies, tag, type}){
+export default function Slider({ movies, tag, type }) {
+  // Define breakpoints for responsive design
+  const breakpoints = {
+    360: { slidesPerView: 2, spaceBetween: 5 },
+    640: { slidesPerView: 3, spaceBetween: 10 },
+    760: { slidesPerView: 4, spaceBetween: 10 },
+    850: { slidesPerView: 5, spaceBetween: 20 },
+    1024: { slidesPerView: 6, spaceBetween: 10 },
+  };
 
+  return (
+    <div className="flex flex-col w-full justify-center ">
+      <h2 className="text-2xl font-bold text-white -my-2">{tag}</h2>
 
-    const breakpoints = {
-        360: {
-            slidesPerView: 2,
-            spaceBetween: 5,
-          },
-        640: {
-          slidesPerView: 4,
-          spaceBetween: 10,
-        },
-        760: {
-            slidesPerView: 5,
-            spaceBetween: 10,
-          },
-        850: {
-        slidesPerView: 6,
-        spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 7,
-          spaceBetween: 30,
-        },
-      }
+      <div className="w-full flex justify-center items-center">
+        <Swiper
+          navigation
+          pagination={{ clickable: true }}
+          breakpoints={breakpoints}
+          watchOverflow={true}
+          className="w-full h-96"
+        >
+          {/* Map through movies to create Swiper slides */}
+          {movies.map((film) => (
+            <SwiperSlide key={film.id}>
+              <Link href={`/${type}/${film.id}`} className="ml-2">
+                <Card
+                  image={film.poster_path || film.profile_path}
+                  name={film.title || film.name}
+                  rating={film.vote_average}
+                />
+              </Link>
+            </SwiperSlide>
+          ))}
 
-    return(
-            movies.length > 0 ? 
-            
-                <div className=" flex flex-col w-full justify-center  mt-1">
-
-                    <span className="text-xl text-white -mb-4 font-bold">{tag}</span>
-                    
-
-                    <div className="w-full flex flex-row justify-center items-center">
-
-
-                        <Swiper
-                            slidesPerView={8}
-                            spaceBetween={10}
-                            navigation={true}
-                            modules={[Pagination, Navigation]}
-                            breakpoints = {breakpoints}
-                            id="mySwiper"
-                            className="w-full flex justify-center items-center"
-                        >   
-                                
-                                {movies?.map((film)=>
-                                    <SwiperSlide key={film.id}>
-                                        <Link href={`/${type}/${film.id}`} className='ml-10'>
-                                            <Card   
-                                                image={film.poster_path || film.profile_path} 
-                                                name={film.title || film.name} 
-                                                rating={film.vote_average} >
-                                            </Card>
-                                        </Link> 
-                                    </SwiperSlide>
-                                )}
-
-
-
-                                {movies?.length<20?
-                                    null:
-                                    <>
-                                        <SwiperSlide>
-                                            <Link href={`/filmPage`} className='ml-10'>
-                                                <SpecialCard></SpecialCard>
-                                            </Link>
-                                        </SwiperSlide>
-                                    </>
-                                    
-                                }
-                        </Swiper>
-                            
-                    </div>
-                </div>:
-            null
         
-    )
+        </Swiper>
+      </div>
+    </div>
+  );
 }

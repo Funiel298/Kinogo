@@ -8,7 +8,7 @@ export * from '../../components/Slider'
 
 
 const genres = [
-    { name: 'Action & Adventure', id: '10759' },
+    { name: 'Adventure', id: '10759' },
     { name: 'Animation', id: '16' },
     { name: 'Comedy', id: '35' },
     { name: 'Crime', id: '80' },
@@ -19,10 +19,10 @@ const genres = [
     { name: 'Mystery', id: '9648' },
     { name: 'News', id: '10763' },
     { name: 'Reality', id: '10764' },
-    { name: 'Sci-Fi & Fantasy', id: '10765' },
+    { name: 'Fantasy', id: '10765' },
     { name: 'Soap', id: '10766' },
     { name: 'Talk', id: '10767' },
-    { name: 'War & Politics', id: '10768' },
+    { name: 'Politics', id: '10768' },
     { name: 'Western', id: '37' }
   ];
   
@@ -97,14 +97,14 @@ export default function Movie() {
       <div className='flex flex-col w-full pl-32 pr-32'>
         <div className='flex flex-row  '>
             <Swiper 
-            slidesPerView={4}
+            slidesPerView={6}
             spaceBetween={30}
-            navigation={true}
+            navigation
             >
             
 
             {genres.map((genre : any)=>(
-                <SwiperSlide key={genre.id}><button  onClick={() => setSelectedGenre(genre.id)} className='p-3 font-bold bg-gray-900 text-2xl h-40  w-52 rounded-xl text-white'>{genre.name}</button></SwiperSlide>
+                <SwiperSlide key={genre.id}><button  onClick={() => setSelectedGenre(genre.id)} className='p-5 font-bold bg-gray-900 text-lg h-full rounded-xl text-white'>{genre.name}</button></SwiperSlide>
             ))}
             
             </Swiper>

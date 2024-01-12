@@ -52,7 +52,8 @@ html{
     background-color: rgba(255,255,255,0.06);
     backdrop-filter: blur(10px);
     z-index: 10;
-    color: white;
+    color: white !important;
+    transition-duration: 200ms;
   }
   
   .swiper-button-prev{
@@ -61,11 +62,25 @@ html{
     background-color: rgba(255,255,255,0.06);
     backdrop-filter: blur(10px);
     z-index: 10;
-    color: white;
+    color: white !important;
+    transition-duration: 200ms;
   }
 
-  :root {
-    --swiper-theme-color: white;
+  .swiper-button-prev::after {
+    font-size: 1rem !important;
+  }
+
+  .swiper-button-next::after {
+    font-size: 1.5rem !important;
+  }
+
+  .swiper-button-prev:hover {
+    padding: 2.25rem;
+    
+  }
+
+  .swiper-button-next:hover {
+    padding: 2.25rem;
   }
 
 }

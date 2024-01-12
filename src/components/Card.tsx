@@ -1,52 +1,22 @@
-import { AiFillStar, AiOutlineClockCircle } from 'react-icons/ai'
-import { GrFavorite } from 'react-icons/gr'
-export default function Card(props: any){
-    
-    //hover:opacity-100 duration-500
+import React from 'react';
+import Link from 'next/link';
 
-
+const Card = (props: any) => {
     const API_IMG = "https://image.tmdb.org/t/p/w500/"
 
-    return(
-        <div className=" w-40 h-70 mb-5  flex flex-col">
-            
-            <img src={API_IMG + props.image} alt="film_image"
-                className='
-                h-64 
-                object-cover
-                 rounded-3xl
-                  cursor-pointer
-                   hover:opacity-60
-                    duration-500   ' />
-            
-            <div className='
-                select-none
-                text-white
-                flex  
-                mt-2
-                justify-between
-                items-center'>
-                
-                
-                {props.name?.length<15 ? 
-                    <h3 className='font-bold text-white text-sm md:text-xs'>
-                        {props.name}
-                        </h3>
-                        :
-                    <h3 className='font-bold text-white text-sm md:text-xs'>
-                        {props.name?.slice(0,15)+'...'}
-                        </h3> }
-
-                {props.rating? 
-                    <div className='flex flex-row text-sm  md:text-xs'>
-                        <AiFillStar className='mt-1'/>{<p>{props.rating.toFixed(1)}</p>}
-                    </div>:
-                    null
-                }
-                
+  return (
+    <div className="relative group overflow-hidden rounded-2xl  transform transition-transform duration-300 hover:scale-105 inset-0 bg-black">
+            <img
+                src={API_IMG + props.image}
+                alt={props.name}
+                className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-40 "
+            />
+            <div className="absolute text-white flex-col inset-0 flex items-start justify-between p-5 opacity-0 duration-300 group-hover:opacity-100">
+                <span className="text-sm font-bold bg-gray-800 p-2 rounded-xl bg-opacity-70">{props.rating.toFixed(1)}</span>
+                <p className="text-lg font-bold">{props.name}</p>
             </div>
-            
-            
-        </div>
-    )
-}
+    </div>
+  );
+};
+
+export default Card;

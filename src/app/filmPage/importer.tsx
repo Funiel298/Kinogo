@@ -1,21 +1,30 @@
-'use client'
-
-
-
-
-import GetData from '../../../components/ServerGetData'
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
-import {AiFillStar} from 'react-icons/ai'
-import { use } from "react"
+"use client"
+import React from 'react';
+import { AiFillStar } from 'react-icons/ai';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from "swiper/modules";
-import Slider from '../../../components/Slider'
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-coverflow'; // Import any additional modules you need
+import Slider from '@/components/Slider';
+import GetData from '@/components/ServerGetData';
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
+import { use } from 'react';
 
 
- 
 
+const ServerPage = ({ params: { id } }: { params: Params }) => {
+  const similar = use(GetData(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=f2e3189ddbb0312728c6ef6a85f9dede`));
+  const post = use(GetData(`https://api.themoviedb.org/3/movie/${id}?api_key=f2e3189ddbb0312728c6ef6a85f9dede`));
+  const trailers = use(GetData(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=f2e3189ddbb0312728c6ef6a85f9dede`));
+  const casting = use(GetData(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede`));
 
-   const breakpoints = {
+  const API_IMG = 'https://image.tmdb.org/t/p/w500';
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'Jule', 'August', 'September', 'October', 'November', 'December'];
+
+  const breakpoints = {
     640: {
       slidesPerView: 1,
       spaceBetween: 10,
@@ -28,29 +37,9 @@ import Slider from '../../../components/Slider'
       slidesPerView: 1.5,
       spaceBetween: 50,
     },
-  }
-
-
-    const months = ['January','February','March','April','May','June','Jule','August','September','October','November','December']
-
-
-
-export default function Page({params : { id }}){
-
-    // https://api.themoviedb.org/3/movie/457332/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede
-
-    
-    
-    const similar = use(GetData(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const post = use(GetData(`https://api.themoviedb.org/3/movie/${id}?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const trailers = use(GetData(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    const casting = use(GetData(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
-    console.log(trailers)
-    const API_IMG = "https://image.tmdb.org/t/p/w500/"
-
-    console.log(post.release_date?.slice(5,6))
-    return(
-        <div className="bg-gray-900 w-full">
+  };
+  return (
+    <div className="bg-gray-900 w-full">
             <div className="flex flex-row">
                 <img className="w-full fixed  h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
                 <div className="text-white r-0 absolute  flex justify-end h-96   w-full bg-gradient-to-b from-transparent  from-10% to-gray-900 to-100%"/>
@@ -77,7 +66,7 @@ export default function Page({params : { id }}){
                         <div className="border-b-2 mt-4 mb-2 flex flex-row justify-between items-center">
                             <h2 className="text-xl font-medium">Genres</h2>
                             <div className="flex flex-row flex-wrap justify-end w-3/5">
-                                {post.genres?.map((film)=>{
+                                {post.genres?.map((film : any)=>{
                                     return(<p key={film} className="text-sm text-gray-600 ml-1 ">{film.name}</p>)
                                 })}
                             </div>
@@ -85,7 +74,7 @@ export default function Page({params : { id }}){
                         <div className="border-b-2  mb-2 flex flex-row justify-between items-center">
                             <h2 className="text-xl font-medium">Country of origins:</h2> 
                             <div  className="flex flex-row flex-wrap justify-end w-3/5">
-                                {post.production_countries?.map((film)=>{
+                                {post.production_countries?.map((film: any)=>{
                                     return(<p key={film} className="text-sm text-gray-600 ml-1">{film.name}</p>)
                                 })}
                                 
@@ -106,7 +95,7 @@ export default function Page({params : { id }}){
                 <Swiper
                     navigation={true}
                     slidesPerView={2}
-                    slidesPerClick={1}
+                    slidesPerGroup={1} 
                     centeredSlides={true}
                     spaceBetween={50}
                     modules={[Pagination, Navigation]}
@@ -114,7 +103,7 @@ export default function Page({params : { id }}){
                     id="mySwiper"
                     className="w-11/12 mt-10 p-10"
                     >
-                    {trailers.results.map((film)=>
+                    {trailers.results.map((film:any)=>
                         <SwiperSlide>
                             <div className="  h-auto mb-10  flex flex-col items-center">
                                 <iframe 
@@ -126,9 +115,8 @@ export default function Page({params : { id }}){
                                     height="400" 
                                     src={`https://www.youtube.com/embed/${film.key} `}
                                     title="YouTube video player" 
-                                    frameborder="0" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                    allowfullscreen>
+                                    >
 
                                 </iframe>
                                 
@@ -170,6 +158,6 @@ export default function Page({params : { id }}){
 
  
         </div>
-        
-    )
-}
+  );
+};
+export default ServerPage

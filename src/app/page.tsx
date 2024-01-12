@@ -1,9 +1,10 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import BigCard from '../components/BigCard'
 import { Navigation } from "swiper/modules";
 import Slider from "../components/Slider"
+import 'swiper/swiper-bundle.css';
+
 
 import SwiperCore from 'swiper';
 SwiperCore.use([Navigation]);
@@ -12,6 +13,7 @@ SwiperCore.use([Navigation]);
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import BigCard from "@/components/BigCard";
 
 
 // import required modules
@@ -74,8 +76,11 @@ export default function Home() {
 
 
   const breakpoints = {
-    1024: {
+    640: {
       slidesPerView: 1,
+    },
+    1024: {
+      slidesPerView: 1.75,
     },
   }
   
@@ -88,34 +93,34 @@ export default function Home() {
       <div className="flex justify-center w-full flex-wrap items-center mt-10">
 
       
+
       <Swiper
-        navigation={true}
-        slidesPerView={3}
-        loop={true}
-        breakpoints = {breakpoints}
         centeredSlides={true}
+        slidesPerView={1.75}
+        navigation
+        loop={true}
+        pagination={{ clickable: true }}
         
-          modules={[ Navigation]}
-          className="w-full mt-5"
-        >
-          {nowPlaying.map((film)=>
-            <SwiperSlide> 
-              <BigCard 
-                key={film.overview} 
-                link={`filmPage/${film.id}`} 
-                image={API_IMG+film.backdrop_path} 
-                name={film.original_title} 
-                rating={film.vote_average} 
-                desc={film.overview} 
-                year={film.release_date} >
-              </BigCard> 
-            
-            </SwiperSlide>
-          )}
-          
-            
-          
-        </Swiper>
+        className="relative group overflow-hidden rounded-lg w-full mx-2 mb-5 "
+      >
+        {nowPlaying.map((film) => (
+          <SwiperSlide key={film.id}>
+            <BigCard
+              link={`filmPage/${film.id}`}
+              image={API_IMG + film.backdrop_path}
+              name={film.original_title}
+              rating={film.vote_average}
+              desc={film.overview}
+              year={film.release_date}
+            />
+          </SwiperSlide>
+        ))}
+
+        
+
+      </Swiper>
+
+
         <div className="w-11/12 flex justify-center items-center flex-col">    
             <Slider movies={movies} tag={'Popular'} type={'filmPage'} />
             <Slider movies={topRated} tag={'Top Rated'} type={'filmPage'}/>
