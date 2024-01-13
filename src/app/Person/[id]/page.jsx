@@ -39,9 +39,9 @@ export default function Page({params : { id }}){
 
     console.log(post.birthday?.slice(5,6))
     return(
-        <div className="bg-gray-900">
-            <div className="text-white flex flex-col items-center justify-center">
-                <div className="flex items-center justify-center m-10">
+        <div className="bg-gray-900 min-h-screen">
+            <div className="text-white flex  flex-col items-center justify-center">
+                <div className="flex mt-[20vh] items-center justify-center m-10">
                     <img width={300} className="rounded-3xl" src={API_IMG+ post.profile_path} alt="" />
                     <div className="w-96 ml-20">   
                         <h1 className="text-3xl font-bold ">{post.name}</h1>

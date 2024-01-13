@@ -63,10 +63,9 @@ const Actor: React.FC = () => {
 
     return (
         <div className='bg-gray-800 pt-10 flex flex-col justify-center items-center'>
-            {/* ... your existing JSX */}
-            <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
+            <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10 min-h-screen">
                 {actors.map((actor: any) => (
-                    <Link key={actor.id} href={`/Person/${actor.id}`} className="m-10">
+                    <Link key={actor.id} href={`/Person/${actor.id}`} className="m-3 min-w-36 text-lg min-h-72 max-w-48">
                         <Card
                             image={actor.profile_path}
                             name={actor.name}

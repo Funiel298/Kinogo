@@ -5,26 +5,47 @@ import Card from '../../components/Card'
 import { Swiper,SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 export * from '../../components/Slider'
-
+import {
+  FiPlay,
+  FiMap,
+  FiSmile,
+  FiHeart,
+  FiBookOpen,
+  FiMusic,
+  FiCoffee,
+  FiDroplet,
+  FiFilm,
+  FiMonitor,
+  FiGlobe,
+  FiAlertTriangle,
+  FiCamera,
+  FiTv,
+  FiBriefcase,
+  FiTarget,
+  FiAnchor,
+  FiSun,
+} from 'react-icons/fi';
+import { MdOutlineScience } from "react-icons/md";
+import { GiTank } from "react-icons/gi";
 
 const genres = [
-    { name: 'Adventure', id: '10759' },
-    { name: 'Animation', id: '16' },
-    { name: 'Comedy', id: '35' },
-    { name: 'Crime', id: '80' },
-    { name: 'Documentary', id: '99' },
-    { name: 'Drama', id: '18' },
-    { name: 'Family', id: '10751' },
-    { name: 'Kids', id: '10762' },
-    { name: 'Mystery', id: '9648' },
-    { name: 'News', id: '10763' },
-    { name: 'Reality', id: '10764' },
-    { name: 'Fantasy', id: '10765' },
-    { name: 'Soap', id: '10766' },
-    { name: 'Talk', id: '10767' },
-    { name: 'Politics', id: '10768' },
-    { name: 'Western', id: '37' }
-  ];
+  { name: 'Adventure', id: '10759', icon: <FiGlobe /> },
+  { name: 'Animation', id: '16', icon: <FiSmile /> },
+  { name: 'Comedy', id: '35', icon: <FiHeart /> },
+  { name: 'Crime', id: '80', icon: <FiBookOpen /> },
+  { name: 'Documentary', id: '99', icon: <FiMonitor /> },
+  { name: 'Drama', id: '18', icon: <FiPlay /> },
+  { name: 'Family', id: '10751', icon: <FiTarget /> },
+  { name: 'Kids', id: '10762', icon: <FiAnchor /> },
+  { name: 'Mystery', id: '9648', icon: <FiAlertTriangle /> },
+  { name: 'News', id: '10763', icon: <FiDroplet /> },
+  { name: 'Reality', id: '10764', icon: <FiCamera /> },
+  { name: 'Fantasy', id: '10765', icon: <FiSun /> },
+  { name: 'Soap', id: '10766', icon: <FiBriefcase /> },
+  { name: 'Talk', id: '10767', icon: <GiTank /> },
+  { name: 'Politics', id: '10768', icon: <MdOutlineScience /> },
+  { name: 'Western', id: '37', icon: <FiTv /> },
+];
   
 const ranking =[6,7,8,9]
 
@@ -93,39 +114,57 @@ export default function Movie() {
     };
 
   return (
-    <div className='bg-gray-800 pt-10 flex flex-col justify-center items-center'>
-      <div className='flex flex-col w-full pl-32 pr-32'>
+    <div className='bg-gray-900 overflow-hidden pt-10  px-4 md:px-10 lg:px-20 flex flex-col justify-center items-center'>
+      <div className='flex flex-col w-screen pl-32 pr-32 mt-10'>
         <div className='flex flex-row  '>
-            <Swiper 
-            slidesPerView={6}
-            spaceBetween={30}
-            navigation
+          <Swiper 
+            slidesPerView={7.5}
+            spaceBetween={5}
+            mousewheel={true}
             >
             
 
-            {genres.map((genre : any)=>(
-                <SwiperSlide key={genre.id}><button  onClick={() => setSelectedGenre(genre.id)} className='p-5 font-bold bg-gray-900 text-lg h-full rounded-xl text-white'>{genre.name}</button></SwiperSlide>
+            {genres.map((genre: any) => (
+              <SwiperSlide key={`${genre.id}-${genre.name}`}>
+                <button
+                  onClick={() => setSelectedGenre(genre.id)}
+                  className='relative py-5 px-8 font-semibold bg-gray-800 text-lg md:text-xl w-36 rounded-xl text-white flex justify-center items-center flex-col hover:bg-gray-700 transition-colors duration-300'
+                >
+                  <div className='mb-2'>{genre.icon}</div>
+                  <span>{genre.name}</span>
+                </button>
+              </SwiperSlide>
             ))}
             
-            </Swiper>
+          </Swiper>
             
             
             
         </div>
-        <h1 className='mt-5 mb-5 text-2xl font-bold text-white'>Ranking</h1>
-        <div className='flex flex-row items-center justify-between'>
-            <div>
-                {ranking.map((rating)=>(
-                    <button key={rating} onClick={() => {setSelectedRating(rating)}} className='p-5 font-bold bg-gray-900 text-xl  rounded-xl mr-5 text-white'>{rating}</button>
+        
+        <div className='flex flex-row mt-5 items-center justify-between'>
+            <div className='flex flex-row items-center'>
+              <h1 className=' text-2xl font-bold text-white'>Ranking:</h1>
+              <div>
+                {ranking.map((rating) => (
+                  <button
+                    key={rating}
+                    onClick={() => setSelectedRating(rating)}
+                    className={`p-3 font-bold text-sm 
+                      ${selectedRating === rating ? 'duration-300 shadow-3xl bg-black text-black' : '  bg-black hover:bg-opacity-40 duration-300'} rounded-xl ml-5 text-white`}
+                  >
+                    {rating}
+                  </button>
                 ))}
+              </div>
             </div>
-            <h1 className='text-white font-bold text-2xl'>You turned series with {selectedRating} Ranking</h1>
+            <h1 className='text-white font-bold text-2xl'>You turned {genres.find((genre) => Number(genre.id) === Number(selectedGenre))?.name || 'All'} series with {selectedRating} Ranking</h1>
         </div>
       </div>
       
-      <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
+      <div className="w-screen min-h-screen mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
         {movies.map((film: any) => (
-          <Link key={film.id} href={`/Series/${film.id}`} className="m-5">
+          <Link key={film.title + film.profile_path} href={`/filmPage/${film.id}`} className="mt-5 ml-5 mr-5 min-w-36 text-lg min-h-72 max-w-48">
             <Card
               image={film.poster_path || film.profile_path}
               name={film.title || film.name}

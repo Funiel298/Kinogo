@@ -1,5 +1,5 @@
 'use client'
-import ServerPage from "../serverPage";
+import ServerPage from '../serverPage';
 import { Suspense } from 'react'
 
 export default function ClientPage(props: any) {

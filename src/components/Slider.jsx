@@ -3,8 +3,9 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import Card from './Card';
+import SwiperCore from "swiper"
 import SpecialCard from './SpecialCard';
-
+SwiperCore.use([Navigation]);
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -12,6 +13,7 @@ import 'swiper/css/navigation';
 
 // Import Swiper modules
 import { Navigation, Pagination } from 'swiper';
+
 
 export default function Slider({ movies, tag, type }) {
   // Define breakpoints for responsive design
@@ -29,7 +31,8 @@ export default function Slider({ movies, tag, type }) {
 
       <div className="w-full flex justify-center items-center">
         <Swiper
-          navigation
+          navigation 
+          modules={{Navigation}}
           pagination={{ clickable: true }}
           breakpoints={breakpoints}
           watchOverflow={true}
