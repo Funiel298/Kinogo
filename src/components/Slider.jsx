@@ -4,17 +4,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import Card from './Card';
 import SwiperCore from "swiper"
-import SpecialCard from './SpecialCard';
-SwiperCore.use([Navigation]);
+
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
 
 // Import Swiper modules
-import { Navigation, Pagination } from 'swiper';
+import { Navigation } from 'swiper/modules';
 
-
+SwiperCore.use([Navigation]);
 export default function Slider({ movies, tag, type }) {
   // Define breakpoints for responsive design
   const breakpoints = {
@@ -39,7 +36,7 @@ export default function Slider({ movies, tag, type }) {
           className="w-full h-96"
         >
           {/* Map through movies to create Swiper slides */}
-          {movies.map((film) => (
+          {movies?.map((film) => (
             <SwiperSlide key={film.id}>
               <Link href={`/${type}/${film.id}`} className="ml-2">
                 <Card

@@ -15,7 +15,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import BigCard from "@/components/BigCard";
 
-
 // import required modules
 
 
@@ -37,7 +36,7 @@ export default function Home() {
 
  const API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=f2e3189ddbb0312728c6ef6a85f9dede"
  const API_IMG = "https://image.tmdb.org/t/p/w500/"
- const API_SEARCH = 'https://api.themoviedb.org/3/search/movie?api_key=f2e3189ddbb0312728c6ef6a85f9dede&query'
+ const API_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&query={search_query}"
  const API_TOPRATED = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
  const API_UPCOMING =  'https://api.themoviedb.org/3/movie/upcoming?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
  const API_NOW =  'https://api.themoviedb.org/3/movie/now_playing?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
@@ -96,12 +95,12 @@ export default function Home() {
 
       <Swiper
         centeredSlides={true}
-        slidesPerView={1.75}
+        slidesPerView={1.65}
         navigation
         loop={true}
         pagination={{ clickable: true }}
         
-        className="relative group overflow-hidden rounded-lg w-full mx-2 mb-5 "
+        className="relative group overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
       >
         {nowPlaying.map((film) => (
           <SwiperSlide key={film.id}>

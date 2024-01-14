@@ -6,15 +6,15 @@
 import GetData from "@/components/ServerGetData"
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
 import {AiFillStar} from 'react-icons/ai'
-import { use } from "react"
+import { use, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
 import Slider from "@/components/Slider"
 import { FaPlay } from "react-icons/fa"
-
-
-
- 
+import Modal from "@/components/Modal"
+import { RiFlag2Line } from "react-icons/ri"
+import { LuStar } from "react-icons/lu"
+import { GiRoundStar } from "react-icons/gi"
 
 
 const breakpoints = {
@@ -50,32 +50,39 @@ export default function ServerPage({ params: { id } }: { params: Params }){
     console.log(trailers)
     const API_IMG = "https://image.tmdb.org/t/p/w500/"
 
-    console.log(post.first_air_date?.slice(5,6))
+    const [videoActive, setVideoActive] = useState(false)
+    const [ratingActive, setRatingActive] = useState(false)
+    const [isRated, setIsRated] = useState(false)
+    const [selectedRating, setSelectedRating] = useState(0);
+    function CloseRating(){
+        setIsRated(true)
+        setRatingActive(false)
+    }
     return(
         <div className="bg-gray-900 w-full overflow-hidden">
 
-            <div className="flex flex-row">
-                <img className="w-full   h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
-                <div className="text-white r-0 absolute  flex justify-end h-96   w-full bg-gradient-to-b from-transparent  from-10% to-gray-900 to-100%"/>
-                 
+            <div className="flex flex-row -mb-48 z-1">
+                <img className="w-full h-96 object-cover object-center" src={API_IMG + post.backdrop_path} alt="" />
+                <div className="text-white r-0 absolute flex justify-end h-96 w-full bg-gradient-to-b from-transparent  from-10% to-gray-900 to-100%" />
             </div>
 
-            <div className="text-white w-full flex flex-col items-center justify-center">
+            <div className="text-white z-10  w-full flex flex-col items-center justify-center">
 
-                <div className="flex items-center justify-center w-full h-[100vh]">
+                <div className="flex z-20 items-center justify-center w-full h-[100vh]">
 
-                    <img className="rounded-3xl w-1/2 h-full object-cover" src={API_IMG+ post.poster_path} alt="" />
+                    <img className="rounded-3xl w-1/2 h-full object-cover object-top" src={API_IMG+ post.poster_path} alt="" />
 
                     <div className="w-1/4 ml-20 ">   
 
-                        <h1 className="text-3xl font-bold ">{post.original_name}</h1>
+                        <h1 className="text-3xl font-bold ">{post.name}</h1>
 
-                        <div className="flex flex-row justify-between ">
-                            <div className="flex flex-row items-center justify-center">
-                                <h6 className="text-sm my-5">Rating:  </h6> 
-                                <AiFillStar className=' ml-3'/>
-                                <h6 className="text-sm ">{post.vote_average?.toFixed(1)} </h6>
-                            </div>
+                        <div className="flex flex-row items-center my-3">
+                                
+                        <h6 className={`text-sm font-semibold p-3 rounded-xl ${post.vote_average > 6 ? 'bg-green-500' : 'bg-black bg-opacity-30'}`}> {post.vote_average?.toFixed(1)}</h6>
+                        <button onClick={() => setRatingActive(true)} className='ml-5 text-xl bg-black bg-opacity-30 hover:bg-opacity-80 duration-500 p-3 rounded-xl'>
+                            {isRated ? <GiRoundStar /> : <LuStar />}
+                        </button>
+                            <button className='ml-5 text-xl rotate-90  bg-black bg-opacity-30 hover:bg-opacity-80 p-3 rounded-xl duration-500'><RiFlag2Line  /></button>
                         </div>
 
                         <h4 className="text-sm  text-gray-300">{post.overview}</h4>
@@ -83,28 +90,28 @@ export default function ServerPage({ params: { id } }: { params: Params }){
 
                         <div className='grid grid-cols-2 mt-5 gap-3 w-full h-[50vh] '>
                             
-                            <button className='bg-green-600 w-full h-full flex items-center justify-center text-4xl  rounded-2xl'>
+                            <button onClick={()=>setVideoActive(!videoActive)} className='bg-green-500 hover:scale-110 duration-300 w-full h-full flex items-center justify-center text-4xl  rounded-2xl'>
                                 <FaPlay />    
                             </button>
 
 
-                            <div className='col-span-2 md:col-span-1 flex-col  bg-black bg-opacity-30 w-full flex items-center justify-center h-full rounded-2xl'>
+                            <div className='hover:scale-110 duration-300 col-span-2 md:col-span-1 flex-col  bg-black bg-opacity-30 w-full flex items-center justify-center h-full rounded-2xl'>
                                 <p className='text-white opacity-30'>Genre</p>
-                                <h2 className='text-white text-xl font-bold mb-2'>{post.genres[0]?.name}</h2>
+                                <h2 className='text-white text-xl font-bold mb-2'>{post.genres?.[0]?.name}</h2>
                                 
                             </div>
 
 
-                            <div className='col-span-2 md:col-span-1 flex-col bg-black bg-opacity-30 w-full h-full flex items-center justify-center rounded-2xl'>
+                            <div className='hover:scale-110 duration-300 col-span-2 md:col-span-1 flex-col bg-black bg-opacity-30 w-full h-full flex items-center justify-center rounded-2xl'>
                                 <p className='text-white opacity-30'>Release</p>
                                 <h2 className='text-white text-xl font-bold mb-2'>{ post.first_air_date?.slice(8,10) + ' ' +  months[Number(post.first_air_date?.slice(5,7))-1]}</h2>
                                 
                             </div>
 
 
-                            <div className='col-span-2 md:col-span-1 flex-col bg-black bg-opacity-30 w-full h-full flex items-center justify-center rounded-2xl'>
-                                <p className='text-white opacity-30'>Length</p>
-                                <h2 className='text-white text-xl font-bold mb-2'>{post.number_of_episodes} episodes</h2>
+                            <div className='hover:scale-110 duration-300 col-span-2 md:col-span-1 flex-col bg-black bg-opacity-30 w-full h-full flex items-center justify-center rounded-2xl'>
+                                <p className='text-white opacity-30'>Episodes</p>
+                                <h2 className='text-white text-xl font-bold mb-2'>{post.number_of_episodes}</h2>
 
                             </div>
 
@@ -112,7 +119,7 @@ export default function ServerPage({ params: { id } }: { params: Params }){
                     </div>
                 </div>
 
-        
+                
                          
 
                 <div className="w-11/12 my-5 flex justify-center items-center flex-col">
@@ -124,6 +131,51 @@ export default function ServerPage({ params: { id } }: { params: Params }){
                 
             </div>
 
+        
+        
+        {ratingActive && <Modal active={ratingActive} setActive={setRatingActive}>
+            <div className='flex mt-10 items-center justify-center flex-col p-20 rounded-3xl   bg-gray-900'>
+                <h1 className='text-white mb-3 text-3xl font-bold'>Rate it on a 10-point scale</h1>
+                <div className='flex items-center justify-center'>
+                    {[...Array(10)].map((_, index) => (
+                    <div
+                        key={index}
+                        className={`w-16 h-16 m-2 text-xl font-medium hover:bg-green-500 duration-700 flex items-center justify-center rounded-full 
+                                    ${selectedRating >= index + 1 ? 'bg-green-500' : 'bg-gray-700'} 
+                                    text-white cursor-pointer`}
+                        
+                        onClick={() => setSelectedRating(index + 1)} // Add this line to reset the selectedRating when clicked
+                    >
+                        {index + 1}
+                        
+                    </div>
+                    ))}
+                </div>
+                <div className='flex flex-row justify-between w-full'>
+                    <h6 className='text-gray-400'>Very Bad</h6>
+                    <h6 className='text-gray-400'>Very Great</h6>
+                </div>
+                <button onClick={CloseRating} className='font-semibold mt-5 bg-white rounded-full p-5 text-xl'>Give a Rating</button>
+            </div>
+
+        </Modal>}
+
+        {videoActive && <Modal active={videoActive} setActive={setVideoActive}>
+            <iframe 
+                className='
+                    object-cover
+                    rounded-3xl
+                    cursor-pointer 
+                    inline-block
+                    w-[50vw] 
+                    h-[30vw]'
+                src={`https://www.youtube.com/embed/${trailers.results[0].key} `}
+                title="YouTube video player" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                >
+
+            </iframe>
+        </Modal>}
  
         </div>
         

@@ -164,7 +164,7 @@ export default function Movie() {
       
       <div className="w-screen min-h-screen mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
         {movies.map((film: any) => (
-          <Link key={film.title + film.profile_path} href={`/filmPage/${film.id}`} className="mt-5 ml-5 mr-5 min-w-36 text-lg min-h-72 max-w-48">
+          <Link key={film.title + film.profile_path} href={`/Series/${film.id}`} className="mt-5 ml-5 mr-5 min-w-36 text-lg min-h-72 max-w-48">
             <Card
               image={film.poster_path || film.profile_path}
               name={film.title || film.name}
