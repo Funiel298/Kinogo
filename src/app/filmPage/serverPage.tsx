@@ -51,7 +51,16 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
     setIsRated(true)
     setRatingActive(false)
   }
+  const [savedFilms, setSavedFilms] = useState<any>([]);
 
+  const handleSaveFilm = () => {
+    const isFilmSaved = savedFilms.some((film:any) => film.id === id);
+  
+    if (!isFilmSaved) {
+      setSavedFilms([...savedFilms, { id }]);
+    }
+  };
+  
 
   return (
     <div className="bg-gray-900 w-full overflow-hidden">
@@ -78,7 +87,7 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
                         <button onClick={() => setRatingActive(true)} className='ml-5 text-xl bg-black bg-opacity-30 hover:bg-opacity-80 duration-500 p-3 rounded-xl'>
                             {isRated ? <GiRoundStar /> : <LuStar />}
                         </button>
-                            <button className='ml-5 text-xl rotate-90  bg-black bg-opacity-30 hover:bg-opacity-80 p-3 rounded-xl duration-500'><RiFlag2Line  /></button>
+                            <button onClick={handleSaveFilm} className='ml-5 text-xl rotate-90  bg-black bg-opacity-30 hover:bg-opacity-80 p-3 rounded-xl duration-500'><RiFlag2Line  /></button>
                         </div>
 
                         <h4 className="text-sm  text-gray-300">{post.overview}</h4>
@@ -163,7 +172,7 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
                     inline-block
                     w-[50vw] 
                     h-[30vw]'
-                src={`https://www.youtube.com/embed/${trailers.results[0].key} `}
+                src={`https://www.youtube.com/embed/${trailers.results[0]?.key} `}
                 title="YouTube video player" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                 >

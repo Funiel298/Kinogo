@@ -95,11 +95,13 @@ export default function Home() {
 
       <Swiper
         centeredSlides={true}
+        centeredSlidesBounds={true}
         slidesPerView={1.65}
         navigation
         loop={true}
         pagination={{ clickable: true }}
-        
+        initialSlide={0}
+        spaceBetween={10}
         className="relative group overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
       >
         {nowPlaying.map((film) => (
