@@ -52,6 +52,7 @@ const ranking =[6,7,8,9]
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
+import { Loading } from '@/components/Loading'
 
 
 
@@ -115,15 +116,35 @@ export default function Movie() {
 
   return (
     <div className='bg-gray-900 overflow-hidden pt-10  px-4 md:px-10 lg:px-20 flex flex-col justify-center items-center'>
-      <div className='flex flex-col w-screen pl-32 pr-32 mt-10'>
-        <div className='flex flex-row  '>
-          <Swiper 
-            slidesPerView={7.5}
-            spaceBetween={5}
+      <div className='flex flex-col w-11/12  mt-10'>
+      <div className='flex flex-row justify-center items-center w-screen px-10 lg:p-0 lg:w-full'>
+          <Swiper
+            slidesPerView={2}
+            spaceBetween={10}
             mousewheel={true}
-            >
-            
-
+            breakpoints={{
+              300: {
+                slidesPerView: 2.5,
+                spaceBetween: 20,
+              },
+              590: {
+                slidesPerView: 3.5,
+                spaceBetween: 20,
+              },
+              780: {
+                slidesPerView: 4,
+                spaceBetween: 30,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 40,
+              },
+              1280: {
+                slidesPerView: 7.5,
+                spaceBetween: 50,
+              },
+            }}
+          >
             {genres.map((genre: any) => (
               <SwiperSlide key={`${genre.id}-${genre.name}`}>
                 <button
@@ -135,36 +156,34 @@ export default function Movie() {
                 </button>
               </SwiperSlide>
             ))}
-            
           </Swiper>
-            
-            
-            
         </div>
         
-        <div className='flex flex-row mt-5 items-center justify-between'>
-            <div className='flex flex-row items-center'>
-              <h1 className=' text-2xl font-bold text-white'>Ranking:</h1>
-              <div>
-                {ranking.map((rating) => (
-                  <button
-                    key={rating}
-                    onClick={() => setSelectedRating(rating)}
-                    className={`p-3 font-bold text-sm 
-                      ${selectedRating === rating ? 'duration-300 shadow-3xl bg-black text-black' : '  bg-black hover:bg-opacity-40 duration-300'} rounded-xl ml-5 text-white`}
-                  >
-                    {rating}
-                  </button>
-                ))}
-              </div>
+        <div className='flex md:flex-row flex-col mt-5 lg:w-full w-full items-center justify-center md:justify-between'>
+          <div className='flex flex-row flex-wrap justify-center items-center'>
+            <h1 className='md:text-2xl text-xs font-bold text-white md:mb-2'>Ranking</h1>
+            <div className='flex flex-wrap'>
+              {ranking.map((rating) => (
+                <button
+                  key={rating}
+                  onClick={() => setSelectedRating(rating)}
+                  className={`w-[7vw] h-[7vw] md:w-[3vw] md:h-[3vw] font-bold text-xs md:text-sm 
+                      ${selectedRating === rating ? 'duration-300 shadow-3xl bg-black text-black' : 'bg-black hover:bg-opacity-40 duration-300'} rounded-full ml-2 md:ml-5 text-white`}
+                >
+                  {rating}
+                </button>
+              ))}
             </div>
-            <h1 className='text-white font-bold text-2xl'>You turned {genres.find((genre) => Number(genre.id) === Number(selectedGenre))?.name || 'All'} series with {selectedRating} Ranking</h1>
+          </div>
+          <h1 className='text-white font-bold md:text-2xl text-lg mt-2 md:mt-0'>
+            {genres.find((genre) => Number(genre.id) === Number(selectedGenre))?.name || 'All'} movies with {selectedRating} Ranking
+          </h1>
         </div>
       </div>
       
-      <div className="w-screen min-h-screen mt-5 flex justify-center items-center flex-row flex-wrap pb-10">
+      <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 text-lg xl:grid-cols-6  grid-cols-3 ">
         {movies.map((film: any) => (
-          <Link key={film.title + film.profile_path} href={`/Series/${film.id}`} className="mt-5 ml-5 mr-5 min-w-36 text-lg min-h-72 max-w-48">
+          <Link key={film.title + film.profile_path} href={`/Series/${film.id}`} >
             <Card
               image={film.poster_path || film.profile_path}
               name={film.title || film.name}
@@ -173,7 +192,7 @@ export default function Movie() {
           </Link>
         ))}
       </div>
-      {isLoading && <p  className='text-white font-semibold text-sm pb-5 -mt-5'>Loading...</p>}
+      {isLoading && <Loading/>}
     </div>
   );
 }

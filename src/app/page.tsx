@@ -75,20 +75,23 @@ export default function Home() {
 
 
   const breakpoints = {
+    480: {
+      slidesPerView: 0.7,
+    },
     640: {
       slidesPerView: 1,
     },
     1024: {
-      slidesPerView: 1.75,
+      slidesPerView: 1.65,
     },
   }
   
 
-
+  const isMobile = window.innerWidth <= 780;
 
 
   return (
-    <div className="bg-gray-900 flex justify-center" >
+    <div className="bg-gray-900 flex items-center justify-center" >
       <div className="flex justify-center w-full flex-wrap items-center mt-10">
 
       
@@ -96,12 +99,12 @@ export default function Home() {
       <Swiper
         centeredSlides={true}
         centeredSlidesBounds={true}
-        slidesPerView={1.65}
-        navigation
+        breakpoints={breakpoints}
+        navigation={isMobile ? false : true}
         loop={true}
         pagination={{ clickable: true }}
         initialSlide={0}
-        spaceBetween={10}
+        spaceBetween={5}
         className="relative group overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
       >
         {nowPlaying.map((film) => (

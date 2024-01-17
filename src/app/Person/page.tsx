@@ -5,6 +5,7 @@ import { throttle } from 'lodash';
 import Card from '../../components/Card';
 import fetchData from '../../components/GetActors'; // Import your data fetching function here
 import Link from 'next/link';
+import { Loading } from '@/components/Loading';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 const genres = [
@@ -62,10 +63,10 @@ const Actor: React.FC = () => {
       }, [isLoading, hasMorePages]);
 
     return (
-        <div className='bg-gray-800 pt-10 flex flex-col justify-center items-center'>
-            <div className="w-11/12 mt-5 flex justify-center items-center flex-row flex-wrap pb-10 min-h-screen">
+        <div className='bg-gray-800 pt-16 flex flex-col p-3  justify-center overflow-hidden items-center'>
+            <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 text-lg xl:grid-cols-6  grid-cols-3 ">
                 {actors.map((actor: any) => (
-                    <Link key={actor.id} href={`/Person/${actor.id}`} className="m-3 min-w-36 text-lg min-h-72 max-w-48">
+                    <Link key={actor.id} href={`/Person/${actor.id}`}>
                         <Card
                             image={actor.profile_path}
                             name={actor.name}
@@ -74,7 +75,7 @@ const Actor: React.FC = () => {
                     </Link>
                 ))}
             </div>
-            {isLoading && <p className='text-white font-semibold text-sm pb-5 -mt-5'>Loading...</p>}
+            {isLoading && <Loading/>}
         </div>
     );
 };

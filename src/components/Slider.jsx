@@ -3,37 +3,36 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Link from 'next/link';
 import Card from './Card';
-import SwiperCore from "swiper"
+import SwiperCore, { Navigation } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
 
-// Import Swiper modules
-import { Navigation } from 'swiper/modules';
-
+// Use Swiper modules
 SwiperCore.use([Navigation]);
+
 export default function Slider({ movies, tag, type }) {
   // Define breakpoints for responsive design
   const breakpoints = {
     360: { slidesPerView: 2, spaceBetween: 5 },
-    640: { slidesPerView: 3, spaceBetween: 10 },
-    760: { slidesPerView: 4, spaceBetween: 10 },
-    850: { slidesPerView: 5, spaceBetween: 20 },
-    1024: { slidesPerView: 6, spaceBetween: 10 },
+    640: { slidesPerView: 2, spaceBetween: 10 },
+    768: { slidesPerView: 3, spaceBetween: 10 },
+    1024: { slidesPerView: 4, spaceBetween: 15 },
+    1280: { slidesPerView: 5, spaceBetween: 20 },
   };
 
   return (
-    <div className="flex flex-col w-full justify-center ">
+    <div className="flex flex-col w-full mb-5 md:mb-10 justify-center">
       <h2 className="text-2xl font-bold text-white -my-2">{tag}</h2>
 
       <div className="w-full flex justify-center items-center">
         <Swiper
-          navigation 
-          modules={{Navigation}}
+          navigation={true}
+          modules={{ Navigation }}
           pagination={{ clickable: true }}
           breakpoints={breakpoints}
           watchOverflow={true}
-          className="w-full h-96"
+          className="w-full h-full"
         >
           {/* Map through movies to create Swiper slides */}
           {movies?.map((film) => (
@@ -47,8 +46,6 @@ export default function Slider({ movies, tag, type }) {
               </Link>
             </SwiperSlide>
           ))}
-
-        
         </Swiper>
       </div>
     </div>

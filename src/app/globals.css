@@ -31,21 +31,7 @@ html{
   background-color: #C9196B;
 }
 
-.swiper-button-next{
-  padding: 30px;
-  border-radius: 20px;
-  background-color: rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px);
-  z-index: 10;
-}
 
-.swiper-button-prev{
-  padding: 30px;
-  border-radius: 20px;
-  background-color: rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px);
-  z-index: 10;
-}
 
 .Slider{
   display: flex;
@@ -53,9 +39,10 @@ html{
   align-items: center;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 780px) {
   
   .swiper-button-next{
+    
     padding: 2rem;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.06);
@@ -92,4 +79,50 @@ html{
     padding: 2.25rem;
   }
 
+}
+@media (max-width: 640px) {
+  .swiper-container .swiper-button-next,
+  .swiper-container .swiper-button-prev {
+    visibility: hidden !important;
+    opacity: 0 !important;
+    transition: visibility 0s, opacity 0.5s linear !important;
+  }
+  
+  /* Additional styles for smaller screens can be added here */
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  margin: 3px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
