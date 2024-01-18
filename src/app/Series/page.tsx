@@ -124,6 +124,10 @@ export default function Movie() {
             mousewheel={true}
             breakpoints={{
               300: {
+                slidesPerView: 1.5,
+                spaceBetween: 20,
+              },
+              430: {
                 slidesPerView: 2.5,
                 spaceBetween: 20,
               },

@@ -80,9 +80,9 @@ html{
   }
 
 }
-@media (max-width: 640px) {
-  .swiper-container .swiper-button-next,
-  .swiper-container .swiper-button-prev {
+@media (max-width: 780px) {
+  .swiper-button-next,
+  .swiper-button-prev {
     visibility: hidden !important;
     opacity: 0 !important;
     transition: visibility 0s, opacity 0.5s linear !important;
@@ -125,4 +125,7 @@ html{
   100% {
     transform: rotate(360deg);
   }
+}
+.no-scroll {
+  overflow: hidden;
 }

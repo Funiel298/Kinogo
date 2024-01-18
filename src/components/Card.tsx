@@ -8,7 +8,7 @@ const Card = (props: any) => {
   const imageUrl = props.image ? API_IMG + props.image : fallbackImage;
 
   return (
-    <div className="relative group overflow-hidden rounded-md md:rounded-2xl transform transition-transform duration-300 hover:scale-105 bg-black">
+     <div className="relative group overflow-hidden rounded-xl md:rounded-2xl transform transition-transform duration-300 hover:scale-105 hover:shadow-lg bg-black">
       <img
         src={imageUrl}
         alt={props.name}

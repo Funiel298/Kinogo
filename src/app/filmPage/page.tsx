@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Card from '../../components/Card'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Mousewheel } from 'swiper/modules'
+
 import {
   FiPlay,
   FiMap,

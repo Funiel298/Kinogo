@@ -57,6 +57,7 @@ export default function Search() {
   const API_KEY = "f2e3189ddbb0312728c6ef6a85f9dede";
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
+  const [isClient, setIsClient] = useState(false);
 
   const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
 
@@ -67,10 +68,26 @@ export default function Search() {
         setItems(data.results);
       });
   }, [SEARCH_URL]);
-  const genresMap = genres.reduce((acc : any, { id, name }:any) => {
+
+  const genresMap = genres.reduce((acc: any, { id, name }: any) => {
     acc[id] = name;
     return acc;
   }, {});
+
+  useEffect(() => {
+    setIsClient(true);
+
+    // Apply a class to the body when the search is active
+    if (isClient) {
+      document.body.className = active ? 'no-scroll' : '';
+
+      return () => {
+        document.body.className = ''; // Reset the body class when the component is unmounted
+      };
+    }
+  }, [isClient, active]);
+
+
   return (
       <>
         <IoSearch
@@ -81,8 +98,8 @@ export default function Search() {
         <div
           className={
             active
-              ? `fixed overflow-y-scroll left-0 top-0 border-0 h-screen w-screen bg-black bg-opacity-80 flex justify-center items-center z-50 visible duration-300`
-              : `hidden duration-300`
+              ? `fixed left-0 top-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50 overflow-y-scroll`
+              : `hidden`
           }
         >
           <div className="z-50 w-1/2">
@@ -101,14 +118,14 @@ export default function Search() {
             />
             <div className="grid grid-cols-2 gap-4 h-[50vh]">
               {items.map((card: any) => (
-                <Link onClick={()=>setActive(false)} href={`/filmPage/${card.id}`}>
+                <Link onClick={()=>setActive(false)} key={card} href={`/filmPage/${card.id}`}>
                   <div className="flex flex-row  rounded-md shadow-mdtransition duration-300 transform hover:scale-105">
                     <img
-                      src={`https://image.tmdb.org/t/p/w300/${card.poster_path}`}
+                      src={card.poster_path? `https://image.tmdb.org/t/p/w300/${card.poster_path}`: "https://www.shepherdsearchgroup.com/wp-content/themes/shepherd/images/no-image-found-360x250.png"}
                       alt={card.title}
-                      className="rounded-md mb-2 w-[7vw]"
+                      className="rounded-md mb-2 w-[7vw] object-contain object-top h-full"
                     />
-                    <div className="flex flex-col items-start justify-between ml-5">
+                    <div className="flex flex-col items-start justify-around ml-5">
                       <h3 className="text-xl font-bold ">{card.title}</h3>
                       <div className="flex flex-col">
                         <h1 className="text-lg mb-2 font-medium">{genresMap[card.genre_ids[0]]}</h1>

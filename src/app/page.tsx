@@ -75,9 +75,7 @@ export default function Home() {
 
 
   const breakpoints = {
-    480: {
-      slidesPerView: 0.7,
-    },
+    
     640: {
       slidesPerView: 1,
     },
@@ -87,8 +85,6 @@ export default function Home() {
   }
   
 
-  const isMobile = window.innerWidth <= 780;
-
 
   return (
     <div className="bg-gray-900 flex items-center justify-center" >
@@ -97,13 +93,14 @@ export default function Home() {
       
 
       <Swiper
+      slidesPerView={1}
+        
         centeredSlides={true}
         centeredSlidesBounds={true}
         breakpoints={breakpoints}
-        navigation={isMobile ? false : true}
+        navigation
         loop={true}
         pagination={{ clickable: true }}
-        initialSlide={0}
         spaceBetween={5}
         className="relative group overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
       >

@@ -52,17 +52,17 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
 
   return (
     <div className="bg-gray-900 w-full overflow-hidden">
-        <div className="flex flex-row -z-50">
-            <img className="w-full h-[30vh]  md:h-96 object-cover object-top" src={API_IMG + post.backdrop_path} alt="" />
+        <div className="flex flex-row ">
+            <img className="w-full h-[30vh]   md:h-96 object-cover object-top" src={API_IMG + post.backdrop_path} alt="" />
             <div className="text-white r-0  absolute flex justify-end  h-[30vh] md:h-96 w-full bg-gradient-to-b from-transparent from-10% to-gray-900 to-100%" />
         </div>
 
-        <div className="text-white w-full flex flex-col z-20 items-center justify-center">
-            <div className="flex md:p-5 flex-col md:flex-row z-30 items-center justify-around w-full md:h-[80vh]">
+        <div className="text-white w-full flex flex-col  items-center justify-center">
+            <div className="flex md:p-5 flex-col md:flex-row z-0 items-center justify-around w-full md:h-[80vh]">
                 <img className="rounded-3xl w-0 md:w-1/3 sm:w-1/2 h-full object-cover object-top" src={API_IMG + post.poster_path} alt="" />
                 <div className="w-full lg:w-1/3 md:w-1/2  ml-0 mt-5 p-3 md:mt-0">
 
-                    <h1 className="text-3xl font-bold z-50">{post.title}</h1>
+                    <h1 className="text-3xl font-bold">{post.title}</h1>
 
                     <div className="flex flex-row items-center my-3">
                                 
@@ -76,7 +76,7 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
                     <h4 className="text-sm  text-gray-300">{post.overview}</h4>
 
 
-                    <div className='grid grid-cols-2 gap-3 mb-5 w-full mt-3 h-[50vh] '>
+                    <div className='grid grid-cols-2 gap-3 mb-5 w-full text-center mt-3 h-[50vh] '>
                         <button
                             onClick={() => setVideoActive(!videoActive)}
                             className='bg-green-500 hover:scale-110 duration-300 w-full h-full flex items-center justify-center text-4xl rounded-2xl'

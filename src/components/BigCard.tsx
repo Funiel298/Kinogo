@@ -16,8 +16,8 @@ export default function Card(props: any){
                    opacity-80
                        ' />
 
-            <div className="absolute h-full flex flex-col text-3xl p-10 justify-end rounded-3xl text-white bg-gradient-to-r from-black">
-                <h1 className="font-bold text-2xl mb-2 md:text-sm">{props.name}</h1>
+            <div className="absolute h-full flex flex-col text-3xl md:p-10 p-3 justify-end rounded-3xl text-white bg-gradient-to-r from-black">
+                <h1 className="font-bold md:text-2xl mb-2 text-sm">{props.name}</h1>
                 <div className="flex flex-row text-sm items-center  w-full">
                     <h3 className="font-medium">{props.year?.slice(0,4)}</h3>
                     <span className=" font-bold ml-10 bg-gray-800 p-2 rounded-xl bg-opacity-70">{props.rating.toFixed(1)}</span>
