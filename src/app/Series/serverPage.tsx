@@ -12,6 +12,8 @@ import Modal from "@/components/Modal"
 import { RiFlag2Line } from "react-icons/ri"
 import { LuStar } from "react-icons/lu"
 import { GiRoundStar } from "react-icons/gi"
+import addFilmStore from "../store/AddFilm"
+import { observer } from "mobx-react-lite"
 
 
 const breakpoints = {
@@ -33,8 +35,7 @@ const breakpoints = {
     const months = ['January','February','March','April','May','June','Jule','August','September','October','November','December']
 
 
-
-export default function ServerPage({ params: { id } }: { params: Params }){
+const ServerPage = observer(({ params: { id } }: { params: Params }) => {
 
     // https://api.themoviedb.org/3/movie/457332/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede
 
@@ -79,13 +80,13 @@ export default function ServerPage({ params: { id } }: { params: Params }){
                 <div className="text-white r-0  absolute flex justify-end  h-[30vh] md:h-96 w-full bg-gradient-to-b from-transparent from-10% to-gray-900 to-100%" />
             </div>
 
-            <div className="text-white w-full flex flex-col items-center justify-center">
+            <div className="text-white w-full flex z-0 flex-col items-center justify-center">
             
-                <div className="flex md:p-5 flex-col md:flex-row items-center justify-around w-full md:h-[80vh]">
+                <div className="flex md:p-5 flex-col z-0 md:flex-row items-center justify-around w-full md:h-[80vh]">
                     
-                    <img className="rounded-3xl w-0 md:w-1/3 sm:w-1/2 h-full object-cover object-top" src={API_IMG + post.poster_path} alt="" />
+                    <img className="rounded-3xl w-0 md:w-1/3  sm:w-1/2 h-full object-cover object-top" src={API_IMG + post.poster_path} alt="" />
                     
-                    <div className="w-full lg:w-1/3 md:w-1/2  ml-0 mt-5 p-3 md:mt-0">
+                    <div className="w-full lg:w-1/3 md:w-1/2 z-0  ml-0 mt-5 p-3 md:mt-0">
 
                         <h1 className="text-3xl font-bold ">{post.name}</h1>
 
@@ -95,7 +96,7 @@ export default function ServerPage({ params: { id } }: { params: Params }){
                         <button onClick={() => setRatingActive(true)} className='ml-5 text-xl bg-black bg-opacity-30 hover:bg-opacity-80 duration-500 p-3 rounded-xl'>
                             {isRated ? <GiRoundStar /> : <LuStar />}
                         </button>
-                            <button className='ml-5 text-xl rotate-90  bg-black bg-opacity-30 hover:bg-opacity-80 p-3 rounded-xl duration-500'><RiFlag2Line  /></button>
+                            <button onClick={()=> addFilmStore.addFilm(post.id)} className='ml-5 text-xl rotate-90  bg-black bg-opacity-30 hover:bg-opacity-80 p-3 rounded-xl duration-500'><RiFlag2Line  /></button>
                         </div>
 
                         <h4 className="text-sm  text-gray-300">{post.overview}</h4>
@@ -181,4 +182,6 @@ export default function ServerPage({ params: { id } }: { params: Params }){
         </div>
         
     )
-}
+})
+
+export default ServerPage

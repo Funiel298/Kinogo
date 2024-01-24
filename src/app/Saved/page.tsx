@@ -1,12 +1,12 @@
 import React from 'react';
-
-const SavedFilms = ({ savedFilms }:any) => {
+import addFilm from '../store/AddFilm';
+const SavedFilms = () => {
   return (
-    <div>
-      <h1>Saved Films</h1>
+    <div className='flex justify-start items-center h-full'>
+      <h1 className='text-white text-5xl border-b-2 pb-4  w-full font-bold m-20'>Saved Films</h1>
       <ul>
-        {savedFilms?.map((film:any) => (
-          <li key={film.id}>{film.id}</li>
+        {addFilm.savedFilms?.map((film:any) => (
+          <li key={film}>{film}</li>
         ))}
       </ul>
     </div>

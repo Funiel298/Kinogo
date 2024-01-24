@@ -27,6 +27,11 @@ import {
 } from 'react-icons/fi';
 import { MdOutlineScience } from "react-icons/md";
 import { GiTank } from "react-icons/gi";
+import React, { useState, useEffect } from 'react';
+import fetchMoviesByGenre from '../../components/GenresData'; 
+import { throttle } from 'lodash'
+import { Loading } from '@/components/Loading'
+
 
 const genres = [
   { name: 'Adventure', id: '10759', icon: <FiGlobe /> },
@@ -47,16 +52,11 @@ const genres = [
   { name: 'Western', id: '37', icon: <FiTv /> },
 ];
   
-const ranking =[6,7,8,9]
-
-import React, { useState, useEffect } from 'react';
-import fetchMoviesByGenre from '../../components/GenresData'; 
-import { throttle } from 'lodash'
-import { Loading } from '@/components/Loading'
 
 
 
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+
+
 
 export default function Movie() {
     const [movies, setMovies] : any[] = useState([]);
@@ -84,8 +84,8 @@ export default function Movie() {
   
     useEffect(() => {
       const fetchData = async () => {
-        setMovies([]); // Clear existing movies before fetching new ones
-        setCurrentPage(1); // Reset current page to 1
+        setMovies([]);
+        setCurrentPage(1); 
         setHasMorePages(true);
         await fetchMoviesForCurrentPage();
       };
@@ -100,19 +100,13 @@ export default function Movie() {
     };
   
     useEffect(() => {
-      const handleScrollThrottle = throttle(handleScroll, 200); // Throttle the scroll event
+      const handleScrollThrottle = throttle(handleScroll, 200); 
   
       window.addEventListener('scroll', handleScrollThrottle);
       return () => window.removeEventListener('scroll', handleScrollThrottle);
     }, [isLoading, hasMorePages]);
   
-    const handleGenreChange = (genreId: number) => {
-      setSelectedGenre(genreId);
-    };
-  
-    const handleRatingChange = (rating: number) => {
-      setSelectedRating(rating);
-    };
+    
 
   return (
     <div className='bg-gray-900 overflow-hidden pt-10  px-4 md:px-10 lg:px-20 flex flex-col justify-center items-center'>
@@ -167,7 +161,7 @@ export default function Movie() {
           <div className='flex flex-row flex-wrap justify-center items-center'>
             <h1 className='md:text-2xl text-xs font-bold text-white md:mb-2'>Ranking</h1>
             <div className='flex flex-wrap'>
-              {ranking.map((rating) => (
+              {[6,7,8,9].map((rating) => (
                 <button
                   key={rating}
                   onClick={() => setSelectedRating(rating)}
