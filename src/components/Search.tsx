@@ -26,6 +26,8 @@ import {
 import { MdOutlineScience } from "react-icons/md";
 import { GiTank } from "react-icons/gi";
 export { useState } from "react"
+import Skeleton from "react-loading-skeleton";
+import SkeletonCard from "./SkeletonCards";
 
 const genres = [
   { name: 'Action', id: '28', icon: <FiPlay /> },
@@ -57,15 +59,17 @@ export default function Search() {
   const API_KEY = "f2e3189ddbb0312728c6ef6a85f9dede";
   const [searchQuery, setSearchQuery] = useState("");
   const [items, setItems] = useState([]);
-  const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const SEARCH_URL = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchQuery}`;
 
   useEffect(() => {
+    setLoading(true);
     fetch(SEARCH_URL)
       .then((res) => res.json())
       .then((data) => {
         setItems(data.results);
+        setLoading(false);
       });
   }, [SEARCH_URL]);
 
@@ -74,70 +78,61 @@ export default function Search() {
     return acc;
   }, {});
 
-  useEffect(() => {
-    setIsClient(true);
-
-    if (isClient) {
-      document.body.className = active ? 'no-scroll' : '';
-
-      return () => {
-        document.body.className = '';
-      };
-    }
-  }, [isClient, active]);
-
 
   return (
-      <>
-        <IoSearch
-          onClick={() => setActive(true)}
-          className="mr-10 cursor-pointer"
-        />
+    <>
+      <IoSearch
+        onClick={() => setActive(true)}
+        className="mr-10 cursor-pointer"
+      />
 
-        <div
-          className={
-            active
-              ? `fixed left-0 top-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50 overflow-y-scroll`
-              : `hidden`
-          }
-        >
-          <div className="z-50 w-1/2">
-            {/* Set a higher z-index for the container */}
-            <h1 className="mb-5 font-bold text-3xl">Search</h1>
-            <IoCloseSharp
-              className="fixed left-3 top-3 text-4xl text-gray-400 hover:text-gray-200 duration-500 "
-              onClick={() => setActive(false)}
-            />
-            <input
-              placeholder="Movie&Series"
-              type="text"
-              className="text-sm w-full ml-auto mr-auto mb-10 p-3 focus:outline-none text-black rounded-xl z-50"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <div className="grid grid-cols-2 gap-4 h-[50vh]">
-              {items.map((card: any) => (
-                <Link onClick={()=>setActive(false)} key={card} href={`/filmPage/${card.id}`}>
-                  <div className="flex flex-row  rounded-md shadow-mdtransition duration-300 transform hover:scale-105">
-                    <img
-                      src={card.poster_path? `https://image.tmdb.org/t/p/w300/${card.poster_path}`: "https://www.shepherdsearchgroup.com/wp-content/themes/shepherd/images/no-image-found-360x250.png"}
-                      alt={card.title}
-                      className="rounded-md mb-2 w-[7vw] object-contain object-top h-full"
-                    />
+      <div
+        className={
+          active
+            ? `fixed left-0 top-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center z-50 overflow-y-scroll`
+            : `hidden`
+        }
+      >
+        <div className="z-50 w-1/2">
+          <h1 className="mb-5 font-bold text-3xl">Search</h1>
+          <IoCloseSharp
+            className="fixed left-3 top-3 text-4xl text-gray-400 hover:text-gray-200 duration-500 "
+            onClick={() => setActive(false)}
+          />
+          <input
+            placeholder="Movie&Series"
+            type="text"
+            className="text-sm w-full ml-auto mr-auto mb-10 p-3 focus:outline-none text-black rounded-xl z-50"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="grid grid-cols-2 gap-4 h-[50vh]">
+            {items.map((card: any) => (
+              <Link onClick={() => setActive(false)} key={card} href={`/filmPage/${card.id}`}>
+                <div className="flex flex-row min-h-[22vh]  rounded-md shadow-md transition duration-300 transform hover:scale-105">
+                    {loading && card.poster_path === null ?(
+                      <SkeletonCard/>
+                    ):(
+                      <img
+                        src={card.poster_path ? `https://image.tmdb.org/t/p/w300/${card.poster_path}` : "https://www.shepherdsearchgroup.com/wp-content/themes/shepherd/images/no-image-found-360x250.png"} alt={card.title}
+                        className="rounded-md mb-2 w-[7vw] object-contain object-top h-full"
+                      />
+                    )}
                     <div className="flex flex-col items-start justify-around ml-5">
-                      <h3 className="text-xl font-bold ">{card.title}</h3>
+                      <h3 className="text-xl font-bold ">{card.title || <Skeleton/>}</h3>
                       <div className="flex flex-col">
-                        <h1 className="text-lg mb-2 font-medium">{genresMap[card.genre_ids[0]]}</h1>
-                        <span style={{ width: 'fit-content' }} className="text-sm font-medium bg-gray-800 inline-block p-2 rounded-xl bg-opacity-70">{card.vote_average?.toFixed(1)}</span>
+                        <h1 className="text-lg mb-2 font-medium">{genresMap[card.genre_ids[0]] || <Skeleton/>}</h1>
+                        <span style={{ width: 'fit-content' }} className="text-sm font-medium bg-gray-800 inline-block p-2 rounded-xl bg-opacity-70">{card.vote_average?.toFixed(1)  || <Skeleton/>}</span>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 }
 

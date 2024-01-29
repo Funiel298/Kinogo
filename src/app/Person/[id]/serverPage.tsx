@@ -5,9 +5,9 @@
 
 import GetData from '../../../components/ServerGetData'
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher"
-import { Slider } from "../page" 
+import Slider from '@/components/Slider'
 import {AiFillStar} from 'react-icons/ai'
-import { use } from "react"
+import { use, useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from "swiper/modules";
 
@@ -29,10 +29,19 @@ import Skeleton from 'react-loading-skeleton'
 
 
 
-export default function Page({params : { id }}){
+export default function ServerPage({id} : any){
 
     // https://api.themoviedb.org/3/movie/457332/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede
+    const [isLoading, setIsLoading] = useState(true)
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 100);
+      
+        return () => clearTimeout(timer);
+        
+      }, []);
     
     
     const post = use(getData(`https://api.themoviedb.org/3/person/${id}?api_key=f2e3189ddbb0312728c6ef6a85f9dede`))
@@ -40,7 +49,7 @@ export default function Page({params : { id }}){
 
     console.log(post.birthday?.slice(5,6))
     return(
-        <div className="bg-gray-900 min-h-screen">
+        <div className="bg-gray-900 min-h-screen overflow-x-hidden">
             <div className="text-white flex  flex-col items-center justify-center">
                 <div className="flex mt-[20vh] items-center justify-center m-10">
                     <img width={300} className="rounded-3xl" src={API_IMG+ post.profile_path} alt="" />
@@ -63,7 +72,6 @@ export default function Page({params : { id }}){
                             </div>
                             <h6 className="text-sm mt-3">Known for: {post.known_for_department  || <Skeleton/>} </h6>
                         </div>
-                        <h4 className="text-sm text-gray-300">{post.overview || <Skeleton /> }</h4>
                         <h4 className="text-sm text-gray-300">{post.biography || <Skeleton count={5}/> }</h4>
                         <div className=" mt-4">
                             <h1 className="text-2xl font-bold">Details</h1>

@@ -1,12 +1,11 @@
 "use client"
-import React, { useState, useEffect } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { throttle } from 'lodash';
 import Card from '../../components/Card';
-import fetchData from '../../components/GetActors'; // Import your data fetching function here
+import fetchData from '../../components/GetActors'; 
 import Link from 'next/link';
-import { Loading } from '@/components/loading';
-const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
+import { Loading } from '@/components/Loading';
+import SkeletonCard from '@/components/SkeletonCards';
 
 const genres = [
     // ... your genres data
@@ -15,8 +14,8 @@ const genres = [
 const ranking = [6, 7, 8, 9];
 
 const Actor = () => {
-    const [actors, setActors] = useState<any[]>([]); // Replace any with proper type
-    const [selectedGender, setSelectedGender] = useState<string>(''); // Change to string
+    const [actors, setActors] = useState<any[]>([]);
+    const [selectedGender, setSelectedGender] = useState<string>(''); 
     const [selectedPopularity, setSelectedPopularity] = useState<number>(9);
     const [currentPage, setCurrentPage] = useState(2);
     const [isLoading, setIsLoading] = useState(false);
@@ -40,8 +39,8 @@ const Actor = () => {
     
       useEffect(() => {
         const fetchData = async () => {
-          setActors([]); // Clear existing movies before fetching new ones
-          setCurrentPage(1); // Reset current page to 1
+          setActors([]); 
+          setCurrentPage(1); 
           setHasMorePages(true);
           await fetchMoviesForCurrentPage();
         };
@@ -56,27 +55,33 @@ const Actor = () => {
       };
     
       useEffect(() => {
-        const handleScrollThrottle = throttle(handleScroll, 200); // Throttle the scroll event
+        const handleScrollThrottle = throttle(handleScroll, 200);
     
         window.addEventListener('scroll', handleScrollThrottle);
         return () => window.removeEventListener('scroll', handleScrollThrottle);
       }, [isLoading, hasMorePages]);
 
     return (
-        <div className='bg-gray-800 pt-16 flex flex-col p-3  justify-center overflow-hidden items-center'>
+        <Suspense fallback={<Loading/>}>
+          <div className='bg-gray-800 pt-16 flex flex-col p-3  justify-center overflow-hidden items-center'>
             <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 text-lg xl:grid-cols-6  grid-cols-3 ">
                 {actors.map((actor: any) => (
-                    <Link key={actor.id} href={`/Person/${actor.id}`}>
+                    isLoading?(
+                      <SkeletonCard/>
+                    ):(
+                      <Link key={actor.id} href={`/Person/${actor.id}`}>
                         <Card
                             image={actor.profile_path}
                             name={actor.name}
                             rating={actor.popularity}
                         />
-                    </Link>
+                      </Link>
+                    )
                 ))}
             </div>
             {isLoading && <Loading/>}
-        </div>
+          </div>
+        </Suspense>
     );
 };
 

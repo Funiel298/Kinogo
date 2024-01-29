@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0%;
   box-sizing: border-box;
+  
 }
 
 :root {
@@ -17,6 +18,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  overflow-x: hidden;
 }
 
 main {
@@ -88,7 +90,6 @@ html{
     transition: visibility 0s, opacity 0.5s linear !important;
   }
   
-  /* Additional styles for smaller screens can be added here */
 }
 
 .lds-ring {

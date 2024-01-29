@@ -30,7 +30,7 @@ import { GiTank } from "react-icons/gi";
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Loading } from '@/components/loading'
+import { Loading } from '@/components/Loading'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 

@@ -1,3 +1,5 @@
+// AddFilmStore.js
+
 import { makeAutoObservable } from "mobx";
 
 class AddFilmStore {
@@ -10,6 +12,10 @@ class AddFilmStore {
   addFilm(id: number) {
     this.savedFilms.push(id);
     console.log("added");
+  }
+
+  getSavedFilms() {
+    return this.savedFilms.slice();
   }
 }
 

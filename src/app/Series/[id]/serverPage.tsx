@@ -35,7 +35,7 @@ const breakpoints = {
     const months = ['January','February','March','April','May','June','Jule','August','September','October','November','December']
 
 
-const ServerPage = observer(({ params: { id } }: { params: Params }) => {
+const ServerPage = ({ params: { id } }: { params: Params }) => {
 
     // https://api.themoviedb.org/3/movie/457332/credits?api_key=f2e3189ddbb0312728c6ef6a85f9dede
 
@@ -182,6 +182,6 @@ const ServerPage = observer(({ params: { id } }: { params: Params }) => {
         </div>
         
     )
-})
+}
 
-export default ServerPage
+export default observer(ServerPage);

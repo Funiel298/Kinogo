@@ -9,6 +9,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import BigCard from "@/components/BigCard";
 import SkeletonCard from "@/components/SkeletonCards";
+import 'react-loading-skeleton/dist/skeleton.css'
+import { Loading } from "@/components/Loading";
 
 export default function Home() {
 
@@ -42,6 +44,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   };
 
   fetchData();
@@ -59,56 +62,51 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 0);
-  
-    return () => clearTimeout(timer);
-    setIsLoading(false);
-  }, []);
   
 
 
   return (
-    <div className="bg-gray-900 flex items-center justify-center">
-      <div className="flex justify-center w-full flex-wrap items-center mt-10">
+    <Suspense fallback={<Loading/>}>
+      <div className="bg-gray-900 flex items-center justify-center">
+        <div className="flex justify-center w-full flex-wrap items-center mt-10">
 
-        <Swiper
-          slidesPerView={1}
-          centeredSlides={true}
-          centeredSlidesBounds={true}
-          breakpoints={breakpoints}
-          navigation={true}
-          modules={[Navigation]}
-          loop={true}
-          pagination={{ clickable: true }}
-          spaceBetween={5}
-          className="relative group flex justify-center items-center overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
-        >
-          {nowPlaying.map((film) => (
-            <SwiperSlide key={film.id}>
-              <Suspense fallback={<SkeletonCard />}>
-                <BigCard
-                  link={`filmPage/${film.id}`}
-                  image={API_IMG + film.backdrop_path}
-                  name={film.original_title}
-                  rating={film.vote_average}
-                  desc={film.overview}
-                  year={film.release_date}
-                />
-              </Suspense>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+          <Swiper
+            centeredSlides={true}
+            centeredSlidesBounds={true}
+            breakpoints={breakpoints}
+            navigation={true}
+            modules={[Navigation]}
+            loop={true}
+            pagination={{ clickable: true }}
+            spaceBetween={5}
+            className="relative group flex justify-center items-center overflow-hidden rounded-lg w-full min-h-[50vh] mx-2 my-5 mt-10"
+          >
+            {nowPlaying.map((film) => (
+              <SwiperSlide key={film.id}>
+                  {isLoading? (
+                    <SkeletonCard/>
+                  ):(
+                    <BigCard
+                      link={`filmPage/${film.id}`}
+                      image={API_IMG + film.backdrop_path}
+                      name={film.original_title}
+                      rating={film.vote_average}
+                      desc={film.overview}
+                      year={film.release_date}
+                    />
+                  )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
 
-        <div className="w-11/12 flex justify-center items-center flex-col">
-          <Slider movies={movies} tag={'Popular'} type={'filmPage'} />
-          <Slider movies={topRated} tag={'Top Rated'} type={'filmPage'} />
-          <Slider movies={upcoming} tag={'Upcoming'} type={'filmPage'} />
+          <div className="w-11/12 flex justify-center items-center flex-col">
+            <Slider movies={movies} tag={'Popular'} type={'filmPage'} />
+            <Slider movies={topRated} tag={'Top Rated'} type={'filmPage'} />
+            <Slider movies={upcoming} tag={'Upcoming'} type={'filmPage'} />
+          </div>
+
         </div>
-
       </div>
-    </div>
+    </Suspense>
   );
 }

@@ -85,7 +85,8 @@ const ranking =[6,7,8,9]
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Loading } from '@/components/loading'
+import { Loading } from '@/components/Loading'
+import SkeletonCard from '@/components/SkeletonCards'
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -151,13 +152,17 @@ export default function Movie() {
           >
             {genres.map((genre: any) => (
               <SwiperSlide key={`${genre.id}-${genre.name}`}>
-                <button
-                  onClick={() => setSelectedGenre(genre.id)}
-                  className='relative py-5 px-8 font-semibold bg-gray-800 text-lg md:text-xl w-36 rounded-xl text-white flex justify-center items-center flex-col hover:bg-gray-700 transition-colors duration-300'
-                >
-                  <div className='mb-2'>{genre.icon}</div>
-                  <span>{genre.name}</span>
-                </button>
+                {isLoading?(
+                  <SkeletonCard/>
+                ):(
+                  <button
+                    onClick={() => setSelectedGenre(genre.id)}
+                    className='relative py-5 px-8 font-semibold bg-gray-800 text-lg md:text-xl w-36 rounded-xl text-white flex justify-center items-center flex-col hover:bg-gray-700 transition-colors duration-300'
+                  >
+                    <span className='mb-2'>{genre.icon}</span>
+                    <span>{genre.name}</span>
+                  </button>
+                )}
               </SwiperSlide>
             ))}
           </Swiper>
@@ -170,35 +175,50 @@ export default function Movie() {
             <h1 className='md:text-2xl text-xs font-bold text-white md:mb-2'>Ranking</h1>
             <div className='flex flex-wrap'>
               {ranking.map((rating) => (
-                <button
-                  key={rating}
-                  onClick={() => setSelectedRating(rating)}
-                  className={`w-[7vw] h-[7vw] md:w-[3vw] md:h-[3vw] font-bold text-xs md:text-sm 
-                      ${selectedRating === rating ? 'duration-300 shadow-3xl bg-black text-black' : 'bg-black hover:bg-opacity-40 duration-300'} rounded-full ml-2 md:ml-5 text-white`}
-                >
-                  {rating}
-                </button>
+                isLoading ? (
+                  <SkeletonCard />
+                ): (
+                  <button
+                    key={rating}
+                    onClick={() => setSelectedRating(rating)}
+                    className={`w-[7vw] h-[7vw] md:w-[3vw] md:h-[3vw] font-bold text-xs md:text-sm 
+                        ${selectedRating === rating ? 'duration-300 shadow-3xl bg-black text-black' : 'bg-black hover:bg-opacity-40 duration-300'} rounded-full ml-2 md:ml-5 text-white`}
+                  >
+                    {rating}
+                  </button>
+                )
               ))}
             </div>
           </div>
-          <h1 className='text-white font-bold md:text-2xl text-lg mt-2 md:mt-0'>
-            {genres.find((genre) => Number(genre.id) === Number(selectedGenre))?.name || 'All'} movies with {selectedRating} Ranking
-          </h1>
+
+          {isLoading?(
+            <SkeletonCard/>
+          ):(
+            <h1 className='text-white font-bold md:text-2xl text-lg mt-2 md:mt-0'>
+              {genres.find((genre) => Number(genre.id) === Number(selectedGenre))?.name || 'All'} movies with {selectedRating} Ranking
+            </h1>
+          )}
+
         </div>
       </div>
       
-      <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 xl:grid-cols-6  grid-cols-3 ">
+      <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 xl:grid-cols-6 grid-cols-3 ">
         {movies.map((film: any) => (
-          <Link key={film.title + film.profile_path} href={`/filmPage/${film.id}`} className=" text-lg  ">
-            <Card
-              image={film.poster_path || film.profile_path}
-              name={film.title || film.name}
-              rating={film.vote_average}
-            />
-          </Link>
+          isLoading ? (
+            <SkeletonCard />
+          ) : (
+            <Link key={film.title + film.profile_path} href={`/filmPage/${film.id}`} className=" text-lg  ">
+              <Card
+                image={film.poster_path || film.profile_path}
+                name={film.title || film.name}
+                rating={film.vote_average}
+              />
+            </Link>
+          )
         ))}
       </div>
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
+
     </div>
   );
 }
