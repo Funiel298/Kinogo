@@ -2,7 +2,7 @@ import './globals.css'
 import Nav from '@/app/nav';
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
+import { SkeletonTheme } from 'react-loading-skeleton';
 const inter = Inter({ subsets: ['latin']})
 
 export const metadata = {
@@ -20,9 +20,12 @@ export default function RootLayout({
     return(
         <html>
             <body className={inter.className}>
-                <Nav>    
-                    {children}
-                </Nav>
+                <SkeletonTheme baseColor='#313131' highlightColor='#525252'>
+                    <Nav>    
+                        {children}
+                    </Nav>
+                </SkeletonTheme>
+                
             </body>
         </html>
     )

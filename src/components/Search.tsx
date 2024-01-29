@@ -77,12 +77,11 @@ export default function Search() {
   useEffect(() => {
     setIsClient(true);
 
-    // Apply a class to the body when the search is active
     if (isClient) {
       document.body.className = active ? 'no-scroll' : '';
 
       return () => {
-        document.body.className = ''; // Reset the body class when the component is unmounted
+        document.body.className = '';
       };
     }
   }, [isClient, active]);

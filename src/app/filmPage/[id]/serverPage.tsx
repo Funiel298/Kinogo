@@ -15,7 +15,8 @@ import Modal from '@/components/Modal';
 import { LuStar } from "react-icons/lu";
 import { RiFlag2Line } from "react-icons/ri";
 import { GiRoundStar } from "react-icons/gi";
-
+import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from 'react-loading-skeleton';
 
 
 
@@ -34,11 +35,13 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
   const [ratingActive, setRatingActive] = useState(false)
   const [isRated, setIsRated] = useState(false)
   const [selectedRating, setSelectedRating] = useState(0);
+  const [savedFilms, setSavedFilms] = useState<any>([]);
+
   function CloseRating(){
     setIsRated(true)
     setRatingActive(false)
   }
-  const [savedFilms, setSavedFilms] = useState<any>([]);
+  
 
   const handleSaveFilm = () => {
     const isFilmSaved = savedFilms.some((film:any) => film.id === id);
@@ -59,10 +62,10 @@ const ServerPage = ({ params: { id } }: { params: Params }) => {
 
         <div className="text-white w-full flex flex-col  items-center justify-center">
             <div className="flex md:p-5 flex-col md:flex-row z-0 items-center justify-around w-full md:h-[80vh]">
-                <img className="rounded-3xl w-0 md:w-1/3 sm:w-1/2 h-full object-cover object-top" src={API_IMG + post.poster_path} alt="" />
+                <img className="rounded-3xl w-0 md:w-1/3 sm:w-1/2 h-full object-cover object-top" src={(API_IMG + post.poster_path)} alt="" />
                 <div className="w-full lg:w-1/3 md:w-1/2  ml-0 mt-5 p-3 md:mt-0">
 
-                    <h1 className="text-3xl font-bold">{post.title}</h1>
+                    <h1 className="text-3xl font-bold">{post.title || <Skeleton count={4} /> }</h1>
 
                     <div className="flex flex-row items-center my-3">
                                 

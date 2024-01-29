@@ -28,7 +28,6 @@ import {
 import { MdOutlineScience } from "react-icons/md";
 import { GiTank } from "react-icons/gi";
 import SwiperCore from 'swiper';
-SwiperCore.use([Navigation, Mousewheel]);
 
 
 
@@ -57,19 +56,27 @@ const genres = [
 ];
 
 const breakpoints = {
-  640: {
+  300: {
     slidesPerView: 2.5,
-    spaceBetween: 10,
+    spaceBetween: 20,
   },
-  760: {
-    slidesPerView: 4.5,
-    spaceBetween: 40,
+  590: {
+    slidesPerView: 3.5,
+    spaceBetween: 20,
+  },
+  780: {
+    slidesPerView: 4,
+    spaceBetween: 30,
   },
   1024: {
+    slidesPerView: 5,
+    spaceBetween: 40,
+  },
+  1280: {
     slidesPerView: 7.5,
     spaceBetween: 50,
   },
-};
+}
 
 
 const ranking =[6,7,8,9]
@@ -78,7 +85,7 @@ const ranking =[6,7,8,9]
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Loading } from '@/components/Loading'
+import { Loading } from '@/components/loading'
 
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
@@ -108,8 +115,8 @@ export default function Movie() {
   
     useEffect(() => {
       const fetchData = async () => {
-        setMovies([]); // Clear existing movies before fetching new ones
-        setCurrentPage(1); // Reset current page to 1
+        setMovies([]); 
+        setCurrentPage(1);
         setHasMorePages(true);
         await fetchMoviesForCurrentPage();
       };
@@ -124,7 +131,7 @@ export default function Movie() {
     };
   
     useEffect(() => {
-      const handleScrollThrottle = throttle(handleScroll, 200); // Throttle the scroll event
+      const handleScrollThrottle = throttle(handleScroll, 200); 
   
       window.addEventListener('scroll', handleScrollThrottle);
       return () => window.removeEventListener('scroll', handleScrollThrottle);
@@ -133,34 +140,14 @@ export default function Movie() {
   
   return (
     <div className='bg-gray-900 overflow-hidden pt-10  px-4 md:px-10 lg:px-20 flex flex-col justify-center items-center'>
-      <div className='flex flex-col justify-center items-center w-10/12 mt-10'>
+      <div className='flex flex-col justify-center items-center w-11/12 mt-10'>
         <div className='flex flex-row justify-center items-center w-screen px-10 lg:p-0 lg:w-full'>
           <Swiper
             slidesPerView={2}
             spaceBetween={10}
             mousewheel={true}
-            breakpoints={{
-              300: {
-                slidesPerView: 2.5,
-                spaceBetween: 20,
-              },
-              590: {
-                slidesPerView: 3.5,
-                spaceBetween: 20,
-              },
-              780: {
-                slidesPerView: 4,
-                spaceBetween: 30,
-              },
-              1024: {
-                slidesPerView: 5,
-                spaceBetween: 40,
-              },
-              1280: {
-                slidesPerView: 7.5,
-                spaceBetween: 50,
-              },
-            }}
+            breakpoints={breakpoints}
+            modules={[Mousewheel]}
           >
             {genres.map((genre: any) => (
               <SwiperSlide key={`${genre.id}-${genre.name}`}>

@@ -1,31 +1,14 @@
 "use client"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation } from "swiper/modules";
 import Slider from "../components/Slider"
 import 'swiper/swiper-bundle.css';
-
-
-import SwiperCore from 'swiper';
-SwiperCore.use([Navigation]);
-
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import BigCard from "@/components/BigCard";
-
-// import required modules
-
-
-async function getData() {
-    const response = await fetch('https://api.themoviedb.org/3/movie/popular?api_key=f2e3189ddbb0312728c6ef6a85f9dede')
-
-    return response.json()
-}
-
-
-
+import SkeletonCard from "@/components/SkeletonCards";
 
 export default function Home() {
 
@@ -34,45 +17,35 @@ export default function Home() {
   const [upcoming, setUpcoming] = useState<any[]>([])
   const [nowPlaying, setNowPlaying] = useState<any[]>([])
 
- const API_URL = "https://api.themoviedb.org/3/movie/popular?api_key=f2e3189ddbb0312728c6ef6a85f9dede"
  const API_IMG = "https://image.tmdb.org/t/p/w500/"
- const API_SEARCH = "https://api.themoviedb.org/3/search/movie?api_key={API_KEY}&query={search_query}"
  const API_TOPRATED = 'https://api.themoviedb.org/3/movie/top_rated?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
  const API_UPCOMING =  'https://api.themoviedb.org/3/movie/upcoming?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
  const API_NOW =  'https://api.themoviedb.org/3/movie/now_playing?api_key=f2e3189ddbb0312728c6ef6a85f9dede'
 
-  useEffect(()=>{
-    fetch(API_URL)
-    .then((res)=>res.json())
-    .then(data=>{
-      setMovies(data.results)
-    })
-  },[])
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const popularResponse = await fetch(API_TOPRATED);
+      const upcomingResponse = await fetch(API_UPCOMING);
+      const topRatedResponse = await fetch(API_TOPRATED);
+      const nowPlayingResponse = await fetch(API_NOW);
 
-  useEffect(()=>{
-    fetch(API_UPCOMING)
-    .then((res)=>res.json())
-    .then(data=>{
-      setUpcoming(data.results)
-    })
-  },[])
+      const popularData = await popularResponse.json();
+      const upcomingData = await upcomingResponse.json();
+      const topRatedData = await topRatedResponse.json();
+      const nowPlayingData = await nowPlayingResponse.json();
 
-  useEffect(()=>{
-    fetch(API_TOPRATED)
-    .then((res)=>res.json())
-    .then(data=>{
-      setTopRated(data.results)
-    })
-  },[])
+      setMovies(popularData.results);
+      setUpcoming(upcomingData.results);
+      setTopRated(topRatedData.results);
+      setNowPlaying(nowPlayingData.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  useEffect(()=>{
-    fetch(API_NOW)
-    .then((res)=>res.json())
-    .then(data=>{
-      setNowPlaying(data.results)
-    })
-  },[])
-
+  fetchData();
+}, []);
 
   const breakpoints = {
     
@@ -83,54 +56,59 @@ export default function Home() {
       slidesPerView: 1.65,
     },
   }
+
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 0);
+  
+    return () => clearTimeout(timer);
+    setIsLoading(false);
+  }, []);
   
 
 
   return (
-    <div className="bg-gray-900 flex items-center justify-center" >
+    <div className="bg-gray-900 flex items-center justify-center">
       <div className="flex justify-center w-full flex-wrap items-center mt-10">
 
-      
+        <Swiper
+          slidesPerView={1}
+          centeredSlides={true}
+          centeredSlidesBounds={true}
+          breakpoints={breakpoints}
+          navigation={true}
+          modules={[Navigation]}
+          loop={true}
+          pagination={{ clickable: true }}
+          spaceBetween={5}
+          className="relative group flex justify-center items-center overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
+        >
+          {nowPlaying.map((film) => (
+            <SwiperSlide key={film.id}>
+              <Suspense fallback={<SkeletonCard />}>
+                <BigCard
+                  link={`filmPage/${film.id}`}
+                  image={API_IMG + film.backdrop_path}
+                  name={film.original_title}
+                  rating={film.vote_average}
+                  desc={film.overview}
+                  year={film.release_date}
+                />
+              </Suspense>
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
-      <Swiper
-      slidesPerView={1}
-        
-        centeredSlides={true}
-        centeredSlidesBounds={true}
-        breakpoints={breakpoints}
-        navigation
-        loop={true}
-        pagination={{ clickable: true }}
-        spaceBetween={5}
-        className="relative group overflow-hidden rounded-lg w-full mx-2 my-5 mt-10"
-      >
-        {nowPlaying.map((film) => (
-          <SwiperSlide key={film.id}>
-            <BigCard
-              link={`filmPage/${film.id}`}
-              image={API_IMG + film.backdrop_path}
-              name={film.original_title}
-              rating={film.vote_average}
-              desc={film.overview}
-              year={film.release_date}
-            />
-          </SwiperSlide>
-        ))}
-
-        
-
-      </Swiper>
-
-
-        <div className="w-11/12 flex justify-center items-center flex-col">    
-            <Slider movies={movies} tag={'Popular'} type={'filmPage'} />
-            <Slider movies={topRated} tag={'Top Rated'} type={'filmPage'}/>
-            <Slider movies={upcoming} tag={'Upcoming'} type={'filmPage'}/>
+        <div className="w-11/12 flex justify-center items-center flex-col">
+          <Slider movies={movies} tag={'Popular'} type={'filmPage'} />
+          <Slider movies={topRated} tag={'Top Rated'} type={'filmPage'} />
+          <Slider movies={upcoming} tag={'Upcoming'} type={'filmPage'} />
         </div>
 
-        
-        
       </div>
     </div>
-  )
+  );
 }

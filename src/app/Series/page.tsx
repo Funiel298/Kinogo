@@ -30,7 +30,9 @@ import { GiTank } from "react-icons/gi";
 import React, { useState, useEffect } from 'react';
 import fetchMoviesByGenre from '../../components/GenresData'; 
 import { throttle } from 'lodash'
-import { Loading } from '@/components/Loading'
+import { Loading } from '@/components/loading'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 const genres = [
@@ -149,8 +151,8 @@ export default function Movie() {
                   onClick={() => setSelectedGenre(genre.id)}
                   className='relative py-5 px-8 font-semibold bg-gray-800 text-lg md:text-xl w-36 rounded-xl text-white flex justify-center items-center flex-col hover:bg-gray-700 transition-colors duration-300'
                 >
-                  <div className='mb-2'>{genre.icon}</div>
-                  <span>{genre.name}</span>
+                  <div className='mb-2'>{genre.icon || <Skeleton/>}</div>
+                  <span>{genre.name || <Skeleton/>}</span>
                 </button>
               </SwiperSlide>
             ))}
@@ -179,18 +181,14 @@ export default function Movie() {
         </div>
       </div>
       
-      <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 text-lg xl:grid-cols-6  grid-cols-3 ">
+      <div className="w-full min-h-screen mt-5 grid gap-3 lg:grid-cols-4 text-lg xl:grid-cols-6 grid-cols-3">
         {movies.map((film: any) => (
-          <Link key={film.title + film.profile_path} href={`/Series/${film.id}`} >
-            <Card
-              image={film.poster_path || film.profile_path}
-              name={film.title || film.name}
-              rating={film.vote_average}
-            />
+          <Link key={film.title + film.profile_path} href={`/Series/${film.id}`}>
+            <Card image={film.poster_path || film.profile_path} name={film.title || film.name} rating={film.vote_average} />
           </Link>
         ))}
       </div>
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
     </div>
   );
 }

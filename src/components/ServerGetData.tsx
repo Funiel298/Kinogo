@@ -1,4 +1,4 @@
-export default async function getData(link : string) {
+export default async function GetData(link : string) {
     const response = await fetch(link)
     return response.json()
 

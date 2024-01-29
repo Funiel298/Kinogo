@@ -12,7 +12,7 @@ import Modal from "@/components/Modal"
 import { RiFlag2Line } from "react-icons/ri"
 import { LuStar } from "react-icons/lu"
 import { GiRoundStar } from "react-icons/gi"
-import addFilmStore from "../store/AddFilm"
+import addFilmStore from "../../store/AddFilm"
 import { observer } from "mobx-react-lite"
 
 

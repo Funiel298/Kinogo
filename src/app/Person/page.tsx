@@ -5,7 +5,7 @@ import { throttle } from 'lodash';
 import Card from '../../components/Card';
 import fetchData from '../../components/GetActors'; // Import your data fetching function here
 import Link from 'next/link';
-import { Loading } from '@/components/Loading';
+import { Loading } from '@/components/loading';
 const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 const genres = [
@@ -14,7 +14,7 @@ const genres = [
 
 const ranking = [6, 7, 8, 9];
 
-const Actor: React.FC = () => {
+const Actor = () => {
     const [actors, setActors] = useState<any[]>([]); // Replace any with proper type
     const [selectedGender, setSelectedGender] = useState<string>(''); // Change to string
     const [selectedPopularity, setSelectedPopularity] = useState<number>(9);
