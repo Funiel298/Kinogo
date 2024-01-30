@@ -18,15 +18,7 @@ export default function Slider({ movies, tag, type }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    
-
-    if (document.readyState === 'complete') {
-      setIsLoading(false)
-    } else {
-      window.addEventListener('load', setIsLoading, false);
-      setIsLoading(true)
-      return () => window.removeEventListener('load', setIsLoading);
-    }
+    setIsLoading(false)
   }, []);
 
   return (
@@ -55,8 +47,8 @@ export default function Slider({ movies, tag, type }) {
                 ):(
                   <Link href={`/${type}/${film.id}`} className="ml-2">
                     <Card
-                      image={(film.poster_path || film.profile_path) || <Skeleton />}
-                      name={(film.title || film.name) || <Skeleton />}
+                      image={(film.poster_path || film.profile_path)}
+                      name={(film.title || film.name)}
                       rating={film.vote_average}
                     />
                   </Link>
