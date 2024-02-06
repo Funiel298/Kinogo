@@ -220,7 +220,7 @@ export default function Movie() {
       {isLoading && <Loading />}
 
     </div>
-  );
+  )
 }
 
 
