@@ -29,7 +29,7 @@ const InfoSection = ({ post, release, trailers, length }:InfoSectionProps) => {
       id: post.id,
       name: post.name,
       image: post.poster_path,
-      raning: post.vote_average,
+      ranking: post.vote_average,
       link: `/${length[0]=='Episodes'? 'Series' : 'filmPage'}/1063708` 
     };
 

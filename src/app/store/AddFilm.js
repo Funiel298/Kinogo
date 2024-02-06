@@ -1,7 +1,9 @@
 import { makeAutoObservable, observable } from "mobx";
 
 class AddFilmStore {
-  savedFilms = observable([])
+  savedFilms = observable([
+    {id:104088, name: 'Mr. Fox and Miss Rose',image: 'https://image.tmdb.org/t/p/w500//9YncW006K0NFzzAxp5Kbx6yq9Yo.jpg', ranking: 9.0, link: '/Series/104088'}
+  ])
 
   constructor() {
     makeAutoObservable(this)
